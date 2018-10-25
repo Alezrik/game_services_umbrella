@@ -72,4 +72,14 @@ config :game_services_web, GameServicesWeb.Endpoint,
 
 # Finally import the config/prod.secret.exs which should be versioned
 # separately.
-import_config "prod.secret.exs"
+
+config :libcluster,
+       topologies: [
+         k8s_example: [
+           strategy: Elixir.Cluster.Strategy.Kubernetes,
+           config: [
+             mode: :ip,
+             kubernetes_node_basename: "game-services-umbrella",
+             kubernetes_selector: "app=game-services-umbrella",
+             polling_interval: 10_000]]]
+

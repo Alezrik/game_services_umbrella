@@ -49,4 +49,9 @@ values are bse64 enc
 
 * kubectl create -f k8s/game_services_umbrella-secrets.yaml 
 
+### Create service user with access
+
+* kubectl create clusterrolebinding --user system:serviceaccount:default:default default-sa-admin --clusterrole cluster-admin
+
+
 

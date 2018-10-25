@@ -24,7 +24,7 @@ defmodule GameServicesWeb.MixProject do
   def application do
     [
       mod: {GameServicesWeb.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :ssl, :crypto, :libcluster, :swarm]
     ]
   end
 
@@ -47,7 +47,9 @@ defmodule GameServicesWeb.MixProject do
       {:gettext, "~> 0.11"},
       {:game_services, in_umbrella: true},
       {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"}
+      {:plug_cowboy, "~> 2.0"},
+      {:libcluster, "~> 3.0"},
+      {:swarm, "~> 3.0"}
     ]
   end
 

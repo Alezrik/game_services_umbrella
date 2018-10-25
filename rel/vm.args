@@ -1,2 +1,0 @@
--name myapp@${MY_POD_IP}
--setcookie mymagiccookie
