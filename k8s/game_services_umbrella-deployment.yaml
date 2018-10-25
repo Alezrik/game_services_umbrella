@@ -1,0 +1,40 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: game-services-umbrella-deployment
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: game-services-umbrella
+    spec:
+      containers:
+      - name: game-services-umbrella
+        image: localhost:5000/game_services_umbrella:latest
+        ports:
+        - containerPort: 8000
+        args: ["foreground"]
+        env:
+        - name: HOST
+          value: "example.com"
+        - name: SECRET_KEY_BASE
+          valueFrom:
+            secretKeyRef:
+              name: secrets
+              key: secret_key_base
+        - name: DB_USERNAME
+          value: "postgres"
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: secrets
+              key: db_password
+        - name: DB_NAME
+          value: "game_services_prod"
+        - name: DB_HOSTNAME
+          value: "10.0.2.2"
+        - name: MY_POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
