@@ -1,57 +1,129 @@
-# GameServices.Umbrella
+# GameServices
 
-## Building Releases
+A collection of services for games
 
-### Get Production Dependencies
+## Apps
 
-* mix deps.get --only prod
+* game_services - data services
+* game_services_web - frontend ui
+* mix_docker - set of helpful mix tasks for docker
+* mix_kubernetes - set of helpful mix tasks for kubernetes
 
-### Compile Services
+## Development Environment
 
-* MIX_ENV=prod mix compile
+### Install Pre-Reqs
 
-### Build Static Resources
+* minikube - for testing cluster deployment - https://github.com/kubernetes/minikube
+* docker - https://www.docker.com/
 
-* cd apps/game_services_web/assets && npm install && node node_modules/webpack/bin/webpack.js --mode production && cd ../../..
+### Mix Tasks
 
-* cd apps/game_services_web && mix phx.digest && cd ../..
+#### Docker Tasks
 
-### Build Release
+Start up a local docker registry
 
-* MIX_ENV=prod mix release
+```bash
+mix docker start_local_registry 
+```
 
+Get base docker image
 
-## Make tasks
+```bash
+mix docker get_base_docker
+```
 
-* build - build tz.gz in root folder
-* release - build release docker
-* release-local - build release docker and push to local registry
-* run-local - run latest release
-* clean-build - clean build dockers
+Build the App Builder
 
-## Minikube
+```bash
+mix docker build_builder
+```
 
-* minikube start
-* eval $(minikube docker-env)
-* make build
-* make release-local
-* kubectl apply -f k8s/game_services_umbrella-deployment.yaml
+Build App Latest Version
 
-### Service
+```bash
+mix docker build_umbrella 
+```
 
-* kubectl create -f k8s/game_services_umbrella-service.yaml 
+Build Release Docker
 
-### Secrets
+```bash
+mix docker build_release
+```
 
-values are bse64 enc
+#### Kubernetes Tasks
 
-* echo -n "postgres" | base64
+Start Minikube
 
-* kubectl create -f k8s/game_services_umbrella-secrets.yaml 
+```bash
+mix kubernetes start_minikube 
+```
 
-### Create service user with access
+Create Kubernetes User
 
-* kubectl create clusterrolebinding --user system:serviceaccount:default:default default-sa-admin --clusterrole cluster-admin
+```bash
+mix kubernetes create_auth_user
+```
 
+Create Kubernetes Secrets
 
+```bash
+mix kubernetes create_secrets 
+```
+
+Create Headless Service
+
+```bash
+mix kubernetes create_headless
+```
+
+Create Loadbalancer Service
+
+```bash
+mix kubernetes create_service
+```
+
+Deploy Release docker to Kubernetes
+
+```bash
+mix kubernetes deploy 
+```
+
+### Minikube/Kubernetes commands
+
+Launch Mininkube UI in browser
+
+```bash
+minikube dashboard
+```
+
+Connect to a Running Pod
+
+```bash
+kubectl get pods
+kubectl exec -it POD_NAME -c SERVICENAME -- /bin/bash
+./bin/SERVICENAME remote_console
+```
+
+Connect Minikube and Docker (REQUIRED!)
+
+```bash
+eval $(minikube docker-env)
+```
+
+### Initial Deployment Steps
+
+```bash
+mix kubernetes start_minikube
+eval $(minikube docker-env) # REQUIRED
+mix docker start_local_registry 
+mix docker get_base_docker
+mix docker build_builder
+mix docker build_umbrella
+mix docker build_release
+mix kubernetes create_auth_user # only required once
+mix kubernetes create_secrets
+mix kubernetes create_headless
+mix kubernetes create_service
+mix kubernetes deploy
+```
 

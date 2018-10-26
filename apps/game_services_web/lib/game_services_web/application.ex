@@ -12,13 +12,15 @@ defmodule GameServicesWeb.Application do
         config: [
           service: "game-services-umbrella-headless",
           application_name: "game-services-umbrella",
-          polling_interval: 10_000]
+          polling_interval: 10_000
+        ]
       ]
     ]
+
     # List all child processes to be supervised
     children = [
       # Start the endpoint when the application starts
-    {Cluster.Supervisor, [topologies, [name: GameServicesWeb.ClusterSupervisor]]},
+      {Cluster.Supervisor, [topologies, [name: GameServicesWeb.ClusterSupervisor]]},
       GameServicesWeb.Endpoint
       # Starts a worker by calling: GameServicesWeb.Worker.start_link(arg)
       # {GameServicesWeb.Worker, arg},

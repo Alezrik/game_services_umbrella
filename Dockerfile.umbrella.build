@@ -1,0 +1,13 @@
+# The version of Alpine to use for the final image
+# This should match the version of Alpine that the `elixir:1.7.2-alpine` image uses
+#ARG ALPINE_VERSION=3.8
+
+FROM localhost:5000/game_services_umbrella:build AS builder
+ENV DEBIAN_FRONTEND=noninteractive
+
+COPY . .
+RUN mix deps.get
+RUN mix deps.compile
+RUN cd apps/game_services_web/assets && npm install && node node_modules/webpack/bin/webpack.js --mode production && cd ../../.. \
+  cd apps/game_services_web && mix phx.digest && cd ../..
+RUN mix release --env=prod
