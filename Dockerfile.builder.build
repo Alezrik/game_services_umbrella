@@ -1,0 +1,15 @@
+# The version of Alpine to use for the final image
+# This should match the version of Alpine that the `elixir:1.7.2-alpine` image uses
+#ARG ALPINE_VERSION=3.8
+
+FROM localhost:5000/elixir:1.7.3 AS builder
+ENV DEBIAN_FRONTEND=noninteractive
+
+
+# Install Hex+Rebar
+RUN mix local.hex --force && \
+    mix local.rebar --force \
+    && wget -qO- https://deb.nodesource.com/setup_8.x | bash - \
+    && apt-get install nodejs -y
+WORKDIR /opt/app
+ENV MIX_ENV=prod REPLACE_OS_VARS=true

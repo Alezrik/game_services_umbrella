@@ -74,12 +74,14 @@ config :game_services_web, GameServicesWeb.Endpoint,
 # separately.
 
 config :libcluster,
-       topologies: [
-         k8s_example: [
-           strategy: Elixir.Cluster.Strategy.Kubernetes,
-           config: [
-             mode: :ip,
-             kubernetes_node_basename: "game-services-umbrella",
-             kubernetes_selector: "app=game-services-umbrella",
-             polling_interval: 10_000]]]
-
+  topologies: [
+    k8s_example: [
+      strategy: Elixir.Cluster.Strategy.Kubernetes,
+      config: [
+        mode: :ip,
+        kubernetes_node_basename: "game-services-umbrella",
+        kubernetes_selector: "app=game-services-umbrella",
+        polling_interval: 10_000
+      ]
+    ]
+  ]
