@@ -5,4 +5,6 @@
 * integrate swarm
 * deployment to kubernetes
 * mix tasks for build helpers
-* user authentication
+* Fix up deployment scripts
+* add User schema
+* add Credential schema

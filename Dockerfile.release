@@ -1,5 +1,5 @@
 # From this line onwards, we're in a new image, which will be the image used in production
-FROM localhost:5000/elixir:1.7.3
+FROM 127.0.0.1:5000/elixir:1.7.3
 #
 ENV DEBIAN_FRONTEND=noninteractive
 #
