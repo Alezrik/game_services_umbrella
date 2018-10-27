@@ -38,6 +38,24 @@ defmodule GameServices.Identity do
   def get_credential!(id), do: Repo.get!(Credential, id)
 
   @doc """
+  get credential by name and password
+
+  returns {:error, "no user"} if no user is found, else {:ok, user}
+
+"""
+  def get_user_by_credential_name_and_password(name, password) do
+    query = from c in Credential,
+         where: c.name == ^name and c.password == ^password
+      case Repo.one(query) do
+        nil ->
+          {:error, "no user"}
+        credential ->
+          credential = credential |> Repo.preload(:user)
+          {:ok, credential.user}
+      end
+  end
+
+  @doc """
   Creates a credential.
 
   ## Examples

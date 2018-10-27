@@ -9,3 +9,4 @@
 * add User schema
 * add Credential schema
 * add undeploy and upsert-deploy to kubernetes tasks
+* add user lookup by credential
