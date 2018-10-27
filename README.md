@@ -90,6 +90,19 @@ mix kubernetes deploy
 
 ### Minikube/Kubernetes commands
 
+Check Health of Kubernetes
+
+```bash
+kubectl get pods -n kube-system
+```
+
+Forward registry requests
+
+```bash
+kubectl port-forward --namespace kube-system $(kubectl get po -n kube-system | grep kube-registry-v0 | \
+awk '{print $1;}') 5000:5000
+```
+
 Launch Mininkube UI in browser
 
 ```bash
@@ -104,18 +117,31 @@ kubectl exec -it POD_NAME -c SERVICENAME -- /bin/bash
 ./bin/SERVICENAME remote_console
 ```
 
-Connect Minikube and Docker (REQUIRED!)
+Switch to Minikube Docker
 
 ```bash
 eval $(minikube docker-env)
+```
+
+Revert to regular docker
+
+```bash
+eval $(docker-machine env -u)
 ```
 
 ### Initial Deployment Steps
 
 ```bash
 mix kubernetes start_minikube
-eval $(minikube docker-env) # REQUIRED
+# make sure services are all Running Status
+mix kubernetes status
 mix docker start_local_registry 
+##
+# in a seperate console - will lock console
+kubectl port-forward --namespace kube-system $(kubectl get po -n kube-system | grep kube-registry-v0 | \
+awk '{print $1;}') 5000:5000
+## 
+eval $(minikube docker-env)
 mix docker get_base_docker
 mix docker build_builder
 mix docker build_umbrella

@@ -2,7 +2,6 @@
 .git
 Dockerfile.*
 .idea
-*.gz
 k8s
 
 # Mix artifacts

@@ -20,73 +20,94 @@ defmodule Mix.Tasks.Docker do
 
         String.split(res, "\n")
         |> Enum.filter(fn x -> String.length(x) > 0 end)
-        |> Enum.each(fn x -> execute_shell_with_output("docker kill #{x}") end)
+        |> Enum.each(fn x ->
+          {:ok, res, result} = execute_shell_with_output("docker kill #{x}")
+        end)
 
         {res, _result} = execute_shell("docker ps -a -q")
 
         String.split(res, "\n")
         |> Enum.filter(fn x -> String.length(x) > 0 end)
-        |> Enum.each(fn x -> execute_shell_with_output("docker rm #{x} --force") end)
+        |> Enum.each(fn x ->
+          {:ok, res, result} = execute_shell_with_output("docker rm #{x} --force")
+        end)
 
         {res, _result} = execute_shell("docker images -q")
 
         String.split(res, "\n")
         |> Enum.filter(fn x -> String.length(x) > 0 end)
-        |> Enum.each(fn x -> execute_shell_with_output("docker rmi #{x} --force") end)
+        |> Enum.each(fn x ->
+          {:ok, res, result} = execute_shell_with_output("docker rmi #{x} --force")
+        end)
 
       "get_base_docker" ->
-        execute_shell_with_output("docker pull elixir:1.7.3")
-        execute_shell_with_output("docker tag elixir:1.7.3 localhost:5000/elixir:1.7.3")
-        execute_shell_with_output("docker push localhost:5000/elixir:1.7.3")
-        execute_shell_with_output("docker rmi elixir:1.7.3")
+        {:ok, res, result} = execute_shell_with_output("docker pull elixir:1.7.3")
+
+        {:ok, res, result} =
+          execute_shell_with_output("docker tag elixir:1.7.3 127.0.0.1:5000/elixir:1.7.3")
+
+        {:ok, res, result} = execute_shell_with_output("docker push 127.0.0.1:5000/elixir:1.7.3")
+        {:ok, res, result} = execute_shell_with_output("docker rmi elixir:1.7.3")
 
       "start_local_registry" ->
-        execute_shell_with_output(
-          "docker run -d -p 5000:5000 --restart=always --name registry registry:2"
-        )
+        {:ok, res, result} = execute_shell_with_output("kubectl create -f k8s/kube-registry.yaml")
 
       "build_builder" ->
-        execute_shell_with_output(
-          "docker build -t localhost:5000/game_services_umbrella:build . --file ./Dockerfile.builder.build"
-        )
+        {:ok, res, result} =
+          execute_shell_with_output(
+            "docker build -t 127.0.0.1:5000/game_services_umbrella:build . --file ./Dockerfile.builder.build"
+          )
 
-        execute_shell_with_output("docker push localhost:5000/game_services_umbrella:build")
+        {:ok, res, result} =
+          execute_shell_with_output("docker push 127.0.0.1:5000/game_services_umbrella:build")
 
       "build_umbrella" ->
-        execute_shell_with_output(
-          "docker build -t localhost:5000/game_services_umbrella:#{get_version()} . --file ./Dockerfile.umbrella.build"
-        )
+        {:ok, res, result} =
+          execute_shell_with_output("docker pull 127.0.0.1:5000/game_services_umbrella:build")
 
-        execute_shell_with_output(
-          "docker push localhost:5000/game_services_umbrella:#{get_version()}"
-        )
+        {:ok, res, result} =
+          execute_shell_with_output(
+            "docker build -t 127.0.0.1:5000/game_services_umbrella:#{get_version()} . --file ./Dockerfile.umbrella.build"
+          )
 
-        execute_shell_with_output(
-          "docker tag localhost:5000/game_services_umbrella:#{get_version()} localhost:5000/game_services_umbrella:latest"
-        )
+        {:ok, res, result} =
+          execute_shell_with_output(
+            "docker push 127.0.0.1:5000/game_services_umbrella:#{get_version()}"
+          )
 
-        execute_shell_with_output("docker push localhost:5000/game_services_umbrella:latest")
+        {:ok, res, result} =
+          execute_shell_with_output(
+            "docker tag 127.0.0.1:5000/game_services_umbrella:#{get_version()} 127.0.0.1:5000/game_services_umbrella:compile"
+          )
+
+        {:ok, res, result} =
+          execute_shell_with_output("docker push 127.0.0.1:5000/game_services_umbrella:compile")
 
       "build_release" ->
-        execute_shell_with_output("rm game_services_umbrella.tar.gz")
+        {:ok, res, result} = execute_shell_with_output("rm game_services_umbrella.tar.gz")
 
-        execute_shell_with_output(
-          "docker create --name game_services_umbrella-build localhost:5000/game_services_umbrella:latest"
-        )
+        {:ok, res, result} =
+          execute_shell_with_output(
+            "docker create --name game_services_umbrella-build 127.0.0.1:5000/game_services_umbrella:compile"
+          )
 
-        execute_shell_with_output(
-          "docker cp game_services_umbrella-build:/opt/app/_build/prod/rel/game_services_umbrella/releases/#{
-            get_version()
-          }/game_services_umbrella.tar.gz ./"
-        )
+        {:ok, res, result} =
+          execute_shell_with_output(
+            "docker cp game_services_umbrella-build:/opt/app/_build/prod/rel/game_services_umbrella/releases/#{
+              get_version()
+            }/game_services_umbrella.tar.gz ./"
+          )
 
-        execute_shell_with_output("docker rm game_services_umbrella-build --force")
+        {:ok, res, result} =
+          execute_shell_with_output("docker rm game_services_umbrella-build --force")
 
-        execute_shell_with_output(
-          "docker build -t localhost:5000/game_services_umbrella:release . --file ./Dockerfile.release"
-        )
+        {:ok, res, result} =
+          execute_shell_with_output(
+            "docker build -t 127.0.0.1:5000/game_services_umbrella:release . --file ./Dockerfile.release"
+          )
 
-        execute_shell_with_output("docker push localhost:5000/game_services_umbrella:release")
+        {:ok, res, result} =
+          execute_shell_with_output("docker push 127.0.0.1:5000/game_services_umbrella:release")
 
       _other ->
         IO.puts("invalid command")
@@ -99,7 +120,13 @@ defmodule Mix.Tasks.Docker do
   end
 
   defp execute_shell(cmd, params) when is_list(params) do
-    System.cmd(cmd, params)
+    {res, result} = System.cmd(cmd, params)
+    IO.puts("execute shell result: #{result}")
+
+    case result do
+      0 -> {res, result}
+      other -> {:error}
+    end
   end
 
   defp execute_shell_with_output(cmd) when is_binary(cmd) do
@@ -108,7 +135,13 @@ defmodule Mix.Tasks.Docker do
   end
 
   defp execute_shell_with_output(cmd, params) when is_list(params) do
-    System.cmd(cmd, params, into: IO.stream(:stdio, :line))
+    {res, result} = System.cmd(cmd, params, into: IO.stream(:stdio, :line))
+    IO.puts("execute shell result: #{result}")
+
+    case result do
+      0 -> {:ok, res, result}
+      other -> {:error}
+    end
   end
 
   defp get_version() do

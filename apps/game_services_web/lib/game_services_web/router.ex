@@ -16,6 +16,8 @@ defmodule GameServicesWeb.Router do
   scope "/", GameServicesWeb do
     pipe_through :browser
 
+    resources "/credentials", CredentialController
+    resources "/users", UserController
     get "/", PageController, :index
   end
 

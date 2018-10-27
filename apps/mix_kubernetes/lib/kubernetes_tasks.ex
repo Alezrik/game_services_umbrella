@@ -9,7 +9,8 @@ defmodule Mix.Tasks.Kubernetes do
     * mix kubernetes create_headless - create headless service in kubernetes
     * mix kubernetes create_service - create external loadbalancer service in kubernetes
     * mix kubernetes deploy - deploy :latest tag to kubernetes
-
+    * undeploy - remove deployment from kubernetes
+    * upsert-deploy - redeploy or create deployment in kubernetes (will not effect running pods)
   """
 
   @shortdoc "Functions for Kubernetes"
@@ -17,6 +18,9 @@ defmodule Mix.Tasks.Kubernetes do
     IO.puts(inspect(args))
 
     case List.first(args) do
+      "status" ->
+        execute_shell_with_output("kubectl get pods -n kube-system")
+
       "start_minikube" ->
         execute_shell_with_output("minikube start")
 
@@ -36,6 +40,12 @@ defmodule Mix.Tasks.Kubernetes do
 
       "deploy" ->
         execute_shell_with_output("kubectl create -f k8s/game_services_umbrella-deployment.yaml")
+
+      "undeploy" ->
+        execute_shell_with_output("kubectl delete -f k8s/game_services_umbrella-deployment.yaml")
+
+      "upsert-deploy" ->
+        execute_shell_with_output("kubectl apply -f k8s/game_services_umbrella-deployment.yaml")
     end
   end
 
