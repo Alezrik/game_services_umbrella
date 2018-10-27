@@ -24,7 +24,9 @@ defmodule GameServices.Umbrella.MixProject do
   # and cannot be accessed from applications inside the apps folder
   defp deps do
     [
-      {:distillery, "~> 2.0"}
+      {:distillery, "~> 2.0"},
+      {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 1.0.0-rc.3", only: [:dev], runtime: false}
     ]
   end
 end

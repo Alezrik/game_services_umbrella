@@ -12,13 +12,12 @@ defmodule Mix.Tasks.Docker do
 
   @shortdoc "Various docker tasks"
   def run(args) do
-    IO.puts("#{inspect(args)}")
-
     case List.first(args) do
       "clean" ->
         {res, _result} = execute_shell("docker ps -q")
 
-        String.split(res, "\n")
+        res
+        |> String.split("\n")
         |> Enum.filter(fn x -> String.length(x) > 0 end)
         |> Enum.each(fn x ->
           {:ok, res, result} = execute_shell_with_output("docker kill #{x}")
@@ -26,7 +25,8 @@ defmodule Mix.Tasks.Docker do
 
         {res, _result} = execute_shell("docker ps -a -q")
 
-        String.split(res, "\n")
+        res
+        |> String.split("\n")
         |> Enum.filter(fn x -> String.length(x) > 0 end)
         |> Enum.each(fn x ->
           {:ok, res, result} = execute_shell_with_output("docker rm #{x} --force")
@@ -34,7 +34,8 @@ defmodule Mix.Tasks.Docker do
 
         {res, _result} = execute_shell("docker images -q")
 
-        String.split(res, "\n")
+        res
+        |> String.split("\n")
         |> Enum.filter(fn x -> String.length(x) > 0 end)
         |> Enum.each(fn x ->
           {:ok, res, result} = execute_shell_with_output("docker rmi #{x} --force")
@@ -121,7 +122,6 @@ defmodule Mix.Tasks.Docker do
 
   defp execute_shell(cmd, params) when is_list(params) do
     {res, result} = System.cmd(cmd, params)
-    IO.puts("execute shell result: #{result}")
 
     case result do
       0 -> {res, result}
@@ -136,7 +136,6 @@ defmodule Mix.Tasks.Docker do
 
   defp execute_shell_with_output(cmd, params) when is_list(params) do
     {res, result} = System.cmd(cmd, params, into: IO.stream(:stdio, :line))
-    IO.puts("execute shell result: #{result}")
 
     case result do
       0 -> {:ok, res, result}

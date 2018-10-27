@@ -1,4 +1,7 @@
 defmodule GameServices.Identity.Credential do
+  @moduledoc """
+    a set of Credentials to Identify a User
+  """
   use Ecto.Schema
   import Ecto.Changeset
 
