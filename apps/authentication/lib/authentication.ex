@@ -17,12 +17,14 @@ defmodule Authentication do
   end
 
   @doc """
-  Attempt to retrieve a User by its Credential name and password
+    Attempt to retrieve a User by its Credential name and password
 
-  returns - {:ok, user} | {:error, "no user"}
-"""
+    returns - {:ok, user} | {:error, "no user"}
+  """
   def get_user_by_credential(username, password) do
-    GenServer.call({:via, :swarm, Authentication.AuthenticationWorker}, {:authenticate, username, password})
+    GenServer.call(
+      {:via, :swarm, Authentication.AuthenticationWorker},
+      {:authenticate, username, password}
+    )
   end
-
 end

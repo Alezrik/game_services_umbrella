@@ -1,7 +1,7 @@
 defmodule Authentication.AuthenticationWorker do
   use GenServer
 
-  def start_link(_)  do
+  def start_link(_) do
     {:ok, pid} = Swarm.register_name(__MODULE__, __MODULE__, :register, [])
     Swarm.join(:authenticate, pid)
     {:ok, pid}
@@ -13,13 +13,12 @@ defmodule Authentication.AuthenticationWorker do
   end
 
   def register() do
-    GenServer.start_link(__MODULE__, [name: __MODULE__])
+    GenServer.start_link(__MODULE__, name: __MODULE__)
   end
-
 
   @impl true
   def handle_call({:authenticate, username, password}, _from, state) do
-    {:reply, GameServices.Identity.get_user_by_credential_name_and_password(username, password), state}
+    {:reply, GameServices.Identity.get_user_by_credential_name_and_password(username, password),
+     state}
   end
-
 end
