@@ -10,3 +10,7 @@
 * add Credential schema
 * add undeploy and upsert-deploy to kubernetes tasks
 * add user lookup by credential
+* integrate credo
+* integrate dialyzer
+* integrate dockerhub for base images to speed up deployment
+* integrate circle-ci

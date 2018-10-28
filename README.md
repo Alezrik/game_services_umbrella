@@ -135,15 +135,7 @@ eval $(docker-machine env -u)
 mix kubernetes start_minikube
 # make sure services are all Running Status
 mix kubernetes status
-mix docker start_local_registry 
-##
-# in a seperate console - will lock console
-kubectl port-forward --namespace kube-system $(kubectl get po -n kube-system | grep kube-registry-v0 | \
-awk '{print $1;}') 5000:5000
-## 
 eval $(minikube docker-env)
-mix docker get_base_docker
-mix docker build_builder
 mix docker build_umbrella
 mix docker build_release
 mix kubernetes create_auth_user # only required once

@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
       - name: game-services-umbrella
-        image: localhost:5000/game_services_umbrella:release
+        image: game_services_umbrella:release
         ports:
         - containerPort: 8000
         args: ["foreground"]

@@ -15,8 +15,6 @@ defmodule Mix.Tasks.Kubernetes do
 
   @shortdoc "Functions for Kubernetes"
   def run(args) do
-    IO.puts(inspect(args))
-
     case List.first(args) do
       "status" ->
         execute_shell_with_output("kubectl get pods -n kube-system")
