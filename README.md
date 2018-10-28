@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/Alezrik/game_services_umbrella.svg?style=svg)](https://circleci.com/gh/Alezrik/game_services_umbrella)
+
 # GameServices
 
 A collection of services for games
