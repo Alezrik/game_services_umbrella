@@ -7,8 +7,8 @@ defmodule GameServices.Umbrella.MixProject do
       version: "0.1.0",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      dialyzer: [plt_add_apps: [:mix]],
-     ]
+      dialyzer: [plt_add_apps: [:mix]]
+    ]
   end
 
   # Dependencies can be Hex packages:

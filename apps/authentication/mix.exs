@@ -33,7 +33,8 @@ defmodule Authentication.MixProject do
       {:libcluster, "~> 3.0"},
       {:swarm, "~> 3.0"},
       {:game_services, in_umbrella: true},
-      {:junit_formatter, ">= 0.0.0", only: :test}
+      {:junit_formatter, ">= 0.0.0", only: :test},
+      {:guardian, "~> 1.1.2", github: "Alezrik/guardian"}
     ]
   end
 end
