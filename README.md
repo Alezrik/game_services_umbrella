@@ -9,6 +9,8 @@ A collection of services for games
 * game_services - data services
 * game_services_web - frontend ui
 * mix_docker - set of helpful mix tasks for docker
+* authentication - handles authenticating user credentials
+* user_manager - handles user operations (create, delete, etc)
 * mix_kubernetes - set of helpful mix tasks for kubernetes
 
 ## Development Environment
@@ -21,24 +23,6 @@ A collection of services for games
 ### Mix Tasks
 
 #### Docker Tasks
-
-Start up a local docker registry
-
-```bash
-mix docker start_local_registry 
-```
-
-Get base docker image
-
-```bash
-mix docker get_base_docker
-```
-
-Build the App Builder
-
-```bash
-mix docker build_builder
-```
 
 Build App Latest Version
 
@@ -90,20 +74,7 @@ Deploy Release docker to Kubernetes
 mix kubernetes deploy 
 ```
 
-### Minikube/Kubernetes commands
-
-Check Health of Kubernetes
-
-```bash
-kubectl get pods -n kube-system
-```
-
-Forward registry requests
-
-```bash
-kubectl port-forward --namespace kube-system $(kubectl get po -n kube-system | grep kube-registry-v0 | \
-awk '{print $1;}') 5000:5000
-```
+### Minikube/Kubernetes helpful commands
 
 Launch Mininkube UI in browser
 
