@@ -25,7 +25,7 @@ defmodule UserManager.RegisterWorker do
     |> Ecto.Multi.run(:create_credential, __MODULE__, :create_credential, [name, email, password])
     |> Ecto.Multi.run(:get_user, __MODULE__, :get_user, [])
 
-    Task.Supervisor.async(UserManager.TaskSupervisor, fn ->
+    task = Task.Supervisor.async(UserManager.TaskSupervisor, fn ->
       case GameServices.Repo.transaction(multi) do
         {:ok, credential} ->
           {:reply, {:ok, credential.user}, state}
@@ -33,6 +33,7 @@ defmodule UserManager.RegisterWorker do
           {:reply, other, state}
       end
     end)
+    Task.await(task)
   end
 
   def create_user(_a, _b) do
