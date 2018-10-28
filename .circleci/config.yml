@@ -51,7 +51,8 @@ jobs:  # basic units of work in a run
         command: dockerize -wait tcp://localhost:5432 -timeout 1m
 
     - run: mix test  # run all tests in project
-
+    - run: mix dialyzer
+    - run: mix credo
     - store_test_results:  # upload junit test results for display in Test Summary
         path: _build/test/lib/authentication/test-junit-report.xml # Replace with the name of your :app
     - store_test_results:  # upload junit test results for display in Test Summary
