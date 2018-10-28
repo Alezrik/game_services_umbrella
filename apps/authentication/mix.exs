@@ -32,7 +32,8 @@ defmodule Authentication.MixProject do
 
       {:libcluster, "~> 3.0"},
       {:swarm, "~> 3.0"},
-      {:game_services, in_umbrella: true}
+      {:game_services, in_umbrella: true},
+     {:junit_formatter, ">= 0.0.0", only: :test}
     ]
   end
 end
