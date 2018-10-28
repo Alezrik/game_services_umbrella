@@ -51,7 +51,7 @@ jobs:  # basic units of work in a run
         command: dockerize -wait tcp://localhost:5432 -timeout 1m
 
     - run: mix test  # run all tests in project
-    - run: mix dialyzer
+#    - run: mix dialyzer
     - run: mix credo
     - run: mix coveralls.circle
     - store_test_results:  # upload junit test results for display in Test Summary
