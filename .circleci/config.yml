@@ -53,7 +53,7 @@ jobs:  # basic units of work in a run
     - run: mix test  # run all tests in project
 
     - store_test_results:  # upload junit test results for display in Test Summary
-        path: _build/test/lib/authorization/test-junit-report.xml # Replace with the name of your :app
+        path: _build/test/lib/authentication/test-junit-report.xml # Replace with the name of your :app
     - store_test_results:  # upload junit test results for display in Test Summary
         path: _build/test/lib/game_services/test-junit-report.xml # Replace with the name of your :app
     - store_test_results:  # upload junit test results for display in Test Summary
