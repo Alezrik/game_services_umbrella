@@ -1,7 +1,7 @@
 defmodule UserManager.RegisterWorker do
   @moduledoc """
-  handles work for user registration
-"""
+    handles work for user registration
+  """
   use GenServer
 
   def start_link(_) do
@@ -20,19 +20,27 @@ defmodule UserManager.RegisterWorker do
   end
 
   def handle_call({:register_user, name, email, password}, _from, state) do
-    multi = Ecto.Multi.new
-    |> Ecto.Multi.run(:create_user, __MODULE__, :create_user, [])
-    |> Ecto.Multi.run(:create_credential, __MODULE__, :create_credential, [name, email, password])
-    |> Ecto.Multi.run(:get_user, __MODULE__, :get_user, [])
+    multi =
+      Ecto.Multi.new()
+      |> Ecto.Multi.run(:create_user, __MODULE__, :create_user, [])
+      |> Ecto.Multi.run(:create_credential, __MODULE__, :create_credential, [
+        name,
+        email,
+        password
+      ])
+      |> Ecto.Multi.run(:get_user, __MODULE__, :get_user, [])
 
-    task = Task.Supervisor.async(UserManager.TaskSupervisor, fn ->
-      case GameServices.Repo.transaction(multi) do
-        {:ok, credential} ->
-          {:reply, {:ok, credential.user}, state}
-        other ->
-          {:reply, other, state}
-      end
-    end)
+    task =
+      Task.Supervisor.async(UserManager.TaskSupervisor, fn ->
+        case GameServices.Repo.transaction(multi) do
+          {:ok, credential} ->
+            {:reply, {:ok, credential.user}, state}
+
+          other ->
+            {:reply, other, state}
+        end
+      end)
+
     Task.await(task)
   end
 
@@ -41,8 +49,14 @@ defmodule UserManager.RegisterWorker do
   end
 
   def create_credential(_repo, user, name, email, password) do
-    GameServices.Identity.create_credential(%{name: name, email: email, password: password, user_id: Map.get(user, :create_user).id})
+    GameServices.Identity.create_credential(%{
+      name: name,
+      email: email,
+      password: password,
+      user_id: Map.get(user, :create_user).id
+    })
   end
+
   def get_user(_repo, prev) do
     Map.get(prev, :create_user)
   end

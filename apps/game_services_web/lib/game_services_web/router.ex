@@ -22,7 +22,6 @@ defmodule GameServicesWeb.Router do
     get "/login", LoginController, :index
     get "/registration", RegistrationController, :index
     post "/registration", RegistrationController, :register
-
   end
 
   # Other scopes may use custom stacks.

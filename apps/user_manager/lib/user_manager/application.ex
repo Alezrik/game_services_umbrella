@@ -10,7 +10,7 @@ defmodule UserManager.Application do
     children = [
       # Starts a worker by calling: UserManager.Worker.start_link(arg)
       # {UserManager.Worker, arg},
-    {Task.Supervisor, name: UserManager.TaskSupervisor},
+      {Task.Supervisor, name: UserManager.TaskSupervisor},
       {UserManager.RegisterWorker, :ok}
     ]
 
