@@ -1,22 +1,6 @@
 # From this line onwards, we're in a new image, which will be the image used in production
-FROM 127.0.0.1:5000/elixir:1.7.3
-#
-ENV DEBIAN_FRONTEND=noninteractive
-#
-## The name of your application/release (required)
-ARG APP_NAME
-#
-RUN apt-get update && \
-    apt-get install -y \
-      bash \
-      libssl-dev
-#
-EXPOSE 8000
-ENV PORT=8000 MIX_ENV=prod REPLACE_OS_VARS=true SHELL=/bin/bash APP_NAME=${APP_NAME}
-#
-#
-#
-WORKDIR /app
+FROM alezrik/game_services_umbrella:release
+
 COPY game_services_umbrella.tar.gz ./
 RUN tar xfz game_services_umbrella.tar.gz
 RUN ls -alF bin/

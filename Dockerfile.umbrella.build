@@ -2,7 +2,7 @@
 # This should match the version of Alpine that the `elixir:1.7.2-alpine` image uses
 #ARG ALPINE_VERSION=3.8
 
-FROM 127.0.0.1:5000/game_services_umbrella:build AS builder
+FROM alezrik/game_services_umbrella:builder
 ENV DEBIAN_FRONTEND=noninteractive
 
 COPY . .
