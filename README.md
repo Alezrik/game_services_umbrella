@@ -1,3 +1,6 @@
+[![CircleCI](https://circleci.com/gh/Alezrik/game_services_umbrella.svg?style=svg)](https://circleci.com/gh/Alezrik/game_services_umbrella)
+[![Coverage Status](https://coveralls.io/repos/github/Alezrik/game_services_umbrella/badge.svg?branch=master)](https://coveralls.io/github/Alezrik/game_services_umbrella?branch=master)
+
 # GameServices
 
 A collection of services for games

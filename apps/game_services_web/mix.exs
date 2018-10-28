@@ -39,7 +39,6 @@ defmodule GameServicesWeb.MixProject do
     [
       {:phoenix, "~> 1.4.0-rc"},
       {:phoenix_pubsub, "~> 1.1"},
-      # TODO: temporarily requires ecto until final release
       {:ecto, "~> 3.0-rc", override: true},
       {:phoenix_ecto, "~> 3.5"},
       {:phoenix_html, "~> 2.11"},
@@ -49,7 +48,8 @@ defmodule GameServicesWeb.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:libcluster, "~> 3.0"},
-      {:swarm, "~> 3.0"}
+      {:swarm, "~> 3.0"},
+      {:junit_formatter, ">= 0.0.0", only: :test}
     ]
   end
 

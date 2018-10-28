@@ -15,37 +15,36 @@ defmodule Mix.Tasks.Kubernetes do
 
   @shortdoc "Functions for Kubernetes"
   def run(args) do
-    case List.first(args) do
-      "status" ->
-        execute_shell_with_output("kubectl get pods -n kube-system")
-
-      "start_minikube" ->
-        execute_shell_with_output("minikube start")
-
-      "create_auth_user" ->
-        execute_shell_with_output(
-          "kubectl create clusterrolebinding --user system:serviceaccount:default:default default-sa-admin --clusterrole cluster-admin"
-        )
-
-      "create_secrets" ->
-        execute_shell_with_output("kubectl create -f k8s/game_services_umbrella-secrets.yaml")
-
-      "create_headless" ->
-        execute_shell_with_output("kubectl create -f k8s/game_services_umbrella-headless.yaml")
-
-      "create_service" ->
-        execute_shell_with_output("kubectl create -f k8s/game_services_umbrella-service.yaml")
-
-      "deploy" ->
-        execute_shell_with_output("kubectl create -f k8s/game_services_umbrella-deployment.yaml")
-
-      "undeploy" ->
-        execute_shell_with_output("kubectl delete -f k8s/game_services_umbrella-deployment.yaml")
-
-      "upsert-deploy" ->
-        execute_shell_with_output("kubectl apply -f k8s/game_services_umbrella-deployment.yaml")
-    end
+    process_cmd(List.first(args))
   end
+
+  defp process_cmd("status"), do: execute_shell_with_output("kubectl get pods -n kube-system")
+
+  defp process_cmd("create_auth_user"),
+    do:
+      execute_shell_with_output(
+        "kubectl create clusterrolebinding --user system:serviceaccount:default:default default-sa-admin --clusterrole cluster-admin"
+      )
+
+  defp process_cmd("start_minikube"), do: execute_shell_with_output("minikube start")
+
+  defp process_cmd("create_secrets"),
+    do: execute_shell_with_output("kubectl create -f k8s/game_services_umbrella-secrets.yaml")
+
+  defp process_cmd("create_headless"),
+    do: execute_shell_with_output("kubectl create -f k8s/game_services_umbrella-headless.yaml")
+
+  defp process_cmd("create_service"),
+    do: execute_shell_with_output("kubectl create -f k8s/game_services_umbrella-service.yaml")
+
+  defp process_cmd("deploy"),
+    do: execute_shell_with_output("kubectl create -f k8s/game_services_umbrella-deployment.yaml")
+
+  defp process_cmd("undeploy"),
+    do: execute_shell_with_output("kubectl delete -f k8s/game_services_umbrella-deployment.yaml")
+
+  defp process_cmd("upsert-deploy"),
+    do: execute_shell_with_output("kubectl apply -f k8s/game_services_umbrella-deployment.yaml")
 
   defp execute_shell_with_output(cmd) when is_binary(cmd) do
     shell_cmd = String.split(cmd, " ")
