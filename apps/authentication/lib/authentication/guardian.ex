@@ -1,7 +1,5 @@
 defmodule Authentication.Guardian do
-  @moduledoc """
-    interface for Guardian - https://github.com/ueberauth/guardian
-  """
+  @moduledoc false
   use Guardian, otp_app: :authentication
 
   def subject_for_token(resource, _claims) do

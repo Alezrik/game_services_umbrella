@@ -15,3 +15,4 @@
 * integrate dockerhub for base images to speed up deployment
 * integrate circle-ci
 * user registration workflow
+* enhance documentation

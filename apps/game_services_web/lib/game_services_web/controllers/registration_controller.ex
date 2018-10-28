@@ -1,4 +1,5 @@
 defmodule GameServicesWeb.RegistrationController do
+  @moduledoc false
   use GameServicesWeb, :controller
 
   def index(conn, _params) do

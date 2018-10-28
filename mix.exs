@@ -7,7 +7,14 @@ defmodule GameServices.Umbrella.MixProject do
       version: "0.1.0",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      dialyzer: [plt_add_apps: [:mix]]
+      dialyzer: [plt_add_apps: [:mix]],
+      # better name pending
+      name: "GameServicesUmbrella",
+      source_url: "https://github.com/Alezrik/game_services_umbrella",
+      docs: [
+        main: "readme",
+        extras: ["README.md"]
+      ]
     ]
   end
 
@@ -27,7 +34,8 @@ defmodule GameServices.Umbrella.MixProject do
     [
       {:distillery, "~> 2.0"},
       {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false},
-      {:dialyxir, "~> 1.0.0-rc.3", only: [:dev, :test], runtime: false}
+      {:dialyxir, "~> 1.0.0-rc.3", only: [:dev, :test], runtime: false},
+      {:ex_doc, "~> 0.19", only: :dev, runtime: false}
     ]
   end
 end

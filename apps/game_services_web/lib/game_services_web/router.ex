@@ -1,4 +1,5 @@
 defmodule GameServicesWeb.Router do
+  @moduledoc false
   use GameServicesWeb, :router
 
   pipeline :browser do

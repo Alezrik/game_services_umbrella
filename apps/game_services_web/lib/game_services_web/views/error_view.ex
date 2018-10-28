@@ -1,4 +1,5 @@
 defmodule GameServicesWeb.ErrorView do
+  @moduledoc false
   use GameServicesWeb, :view
 
   # If you want to customize a particular status code

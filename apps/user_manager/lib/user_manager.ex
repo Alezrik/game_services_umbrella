@@ -4,8 +4,10 @@ defmodule UserManager do
   """
 
   @doc """
-    call a genserver to register a new user returns {:ok, user} or {:error, changeset}
+    Register a New User Account
   """
+  @spec register_new_user(String.t(), String.t(), String.t()) ::
+          {:ok, %GameServices.Account.User{}} | {:error, any()}
   def register_new_user(name, email, password) do
     GenServer.call(
       {:via, :swarm, UserManager.RegisterWorker},

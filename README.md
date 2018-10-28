@@ -1,85 +1,135 @@
 [![CircleCI](https://circleci.com/gh/Alezrik/game_services_umbrella.svg?style=svg)](https://circleci.com/gh/Alezrik/game_services_umbrella)
 
-# GameServices
+# GameServicesUmbrella
 
-A collection of services for games
+A collection of Services (better project name pending) to manage Multi Player Games.  Services will enable games to create a persistent multi player world.  Unreal Engine 4 will be used as the Game Client / Game Server(s) in a Multi Player RPG.
 
-## Apps
+## Getting Started
 
-* game_services - data services
-* game_services_web - frontend ui
-* mix_docker - set of helpful mix tasks for docker
-* authentication - handles authenticating user credentials
-* user_manager - handles user operations (create, delete, etc)
-* mix_kubernetes - set of helpful mix tasks for kubernetes
+Setting Up your Machine for Development / Test and Local Deployment
 
-## Development Environment
+### Installing / Local Deployment Game Services
 
-### Install Pre-Reqs
+Install [Docker](http://www.docker.io/) - Docker containers for local deployment build/release
 
-* minikube - for testing cluster deployment - https://github.com/kubernetes/minikube
-* docker - https://www.docker.com/
+Install [Minikube](https://github.com/kubernetes/minikube) - local Kubernetes - local deployment environment
 
-### Mix Tasks
+Install [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) - Kubernetes cli
 
-#### Docker Tasks
-
-Build App Latest Version
+Clone project
 
 ```bash
-mix docker build_umbrella 
+git clone https://github.com/Alezrik/game_services_umbrella.git
 ```
 
-Build Release Docker
+Install NPM packages
+
+```bash
+cd apps/game_services_web/assets
+npm install
+```
+
+Startup minikube
+
+```bash
+mix kubernetes start_minikube
+```
+
+Verify Minikube services are up and running
+
+```bash
+mix kubernetes status
+```
+
+Switch to Minikube docker service
+
+```bash
+eval $(minikube docker-env)
+```
+
+Build Services Umbrella
+
+```bash
+mix docker build_umbrella
+```
+
+Create Release
 
 ```bash
 mix docker build_release
 ```
 
-#### Kubernetes Tasks
-
-Start Minikube
-
-```bash
-mix kubernetes start_minikube 
-```
-
-Create Kubernetes User
+Create Service User for Kubernetes
 
 ```bash
 mix kubernetes create_auth_user
 ```
 
-Create Kubernetes Secrets
+Create Secrets for Services
 
 ```bash
-mix kubernetes create_secrets 
+mix kubernetes create_secrets
 ```
 
-Create Headless Service
+Create a Headless Service for Internal Cluster
 
 ```bash
 mix kubernetes create_headless
 ```
 
-Create Loadbalancer Service
+Create an External Service for external http access
 
 ```bash
 mix kubernetes create_service
 ```
 
-Deploy Release docker to Kubernetes
+Create GameServicesUmbrella cluster
 
 ```bash
-mix kubernetes deploy 
+mix kubernetes deploy
 ```
 
-### Minikube/Kubernetes helpful commands
-
-Launch Mininkube UI in browser
+Verify Cluster / Kubernetes Deployment
 
 ```bash
 minikube dashboard
+```
+
+
+## Running in Development Environment
+
+NOTE: When running in development locally you will see some unintended messages from swarm (Issue)[https://github.com/Alezrik/game_services_umbrella/issues/15]
+
+```bash
+mix phx.server
+```
+
+## Executing Unit tests
+
+NOTE: When running unit tests locally you will see some unintended messages from swarm (Issue)[https://github.com/Alezrik/game_services_umbrella/issues/15]
+
+```bash
+mix test
+```
+
+## Elixir OTP Apps
+* [authentication](apps/authentication/README.md) - Authentication Service
+* [game_services](apps/game_services/README.md) - Database Services
+* [game_services_web](apps/game_services_web/README.md) - [Pheonixframework](http://www.phoenixframework.org) - HTTP Frontend Service
+* [mix_docker](apps/mix_docker/README.md) - mix tasks for interacting with docker
+* [mix_kubernetes](apps/mix_kubernetes/README.md) - mix tasks for interacting with kubernetes/minikube
+* [user_manager](apps/user_manager/README.md) - services for managing user accounts
+
+## Changelog
+
+Project [Changelog](CHANGELOG.md)
+
+## Helpfuck Docker / Kubernetes Commands
+
+Reset Docker to Normal Docker Service
+
+```bash
+eval $(docker-machine env -u)
 ```
 
 Connect to a Running Pod
@@ -89,32 +139,3 @@ kubectl get pods
 kubectl exec -it POD_NAME -c SERVICENAME -- /bin/bash
 ./bin/SERVICENAME remote_console
 ```
-
-Switch to Minikube Docker
-
-```bash
-eval $(minikube docker-env)
-```
-
-Revert to regular docker
-
-```bash
-eval $(docker-machine env -u)
-```
-
-### Initial Deployment Steps
-
-```bash
-mix kubernetes start_minikube
-# make sure services are all Running Status
-mix kubernetes status
-eval $(minikube docker-env)
-mix docker build_umbrella
-mix docker build_release
-mix kubernetes create_auth_user # only required once
-mix kubernetes create_secrets
-mix kubernetes create_headless
-mix kubernetes create_service
-mix kubernetes deploy
-```
-

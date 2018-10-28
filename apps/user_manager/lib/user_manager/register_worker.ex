@@ -1,7 +1,5 @@
 defmodule UserManager.RegisterWorker do
-  @moduledoc """
-    handles work for user registration
-  """
+  @moduledoc false
   use GenServer
 
   def start_link(_) do
