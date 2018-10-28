@@ -9,8 +9,8 @@ jobs:  # basic units of work in a run
     - image: circleci/postgres:10.1-alpine  # database image
       environment:  # environment variables for database
         POSTGRES_USER: postgres
-        POSTGRES_DB: app_test
-        POSTGRES_PASSWORD:
+        POSTGRES_DB: game_services_test
+        POSTGRES_PASSWORD: postgres
 
     working_directory: ~/app  # directory where steps will run
 
@@ -53,4 +53,4 @@ jobs:  # basic units of work in a run
     - run: mix test  # run all tests in project
 
     - store_test_results:  # upload junit test results for display in Test Summary
-        path: _build/test/lib/REPLACE_WITH_YOUR_APP_NAME # Replace with the name of your :app
+        path: _build/test/lib/game_services_umbrella # Replace with the name of your :app
