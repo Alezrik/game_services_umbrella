@@ -8,6 +8,14 @@ A collection of Services (better project name pending) to manage Multi Player Ga
 
 Setting Up your Machine for Development / Test and Local Deployment
 
+## Documentation
+
+Generate Documentation
+
+```bash
+mix doc && open doc/index.html
+```
+
 ### Installing / Local Deployment Game Services
 
 Install [Docker](http://www.docker.io/) - Docker containers for local deployment build/release

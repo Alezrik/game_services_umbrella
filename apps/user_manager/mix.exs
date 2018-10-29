@@ -27,6 +27,7 @@ defmodule UserManager.MixProject do
   defp deps do
     [
       {:ecto, "~> 3.0-rc", override: true},
+      {:game_services, in_umbrella: true},
       {:libcluster, "~> 3.0"},
       {:swarm, "~> 3.0"}
       # {:dep_from_hexpm, "~> 0.3.0"},

@@ -32,7 +32,8 @@ defmodule UserManager.RegisterWorker do
       Task.Supervisor.async(UserManager.TaskSupervisor, fn ->
         case GameServices.Repo.transaction(multi) do
           {:ok, credential} ->
-            {:reply, {:ok, credential.user}, state}
+            user = Map.get(credential, :get_user)
+            {:reply, {:ok, user}, state}
 
           other ->
             {:reply, other, state}
@@ -56,6 +57,6 @@ defmodule UserManager.RegisterWorker do
   end
 
   def get_user(_repo, prev) do
-    Map.get(prev, :create_user)
+    {:ok, Map.get(prev, :create_user)}
   end
 end

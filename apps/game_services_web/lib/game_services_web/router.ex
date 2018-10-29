@@ -21,6 +21,7 @@ defmodule GameServicesWeb.Router do
     resources "/users", UserController
     get "/", PageController, :index
     get "/login", LoginController, :index
+    post "/login", LoginController, :login
     get "/registration", RegistrationController, :index
     post "/registration", RegistrationController, :register
   end
