@@ -6,11 +6,6 @@ jobs:  # basic units of work in a run
     - image: circleci/elixir:1.7.3  # ...with this image as the primary container; this is where all `steps` will run
       environment:  # environment variables for primary container
         MIX_ENV: test
-    - image: circleci/postgres:10.1-alpine  # database image
-      environment:  # environment variables for database
-        POSTGRES_USER: postgres
-        POSTGRES_DB: game_services_test
-        POSTGRES_PASSWORD: postgres
 
     working_directory: ~/app  # directory where steps will run
 
@@ -67,16 +62,11 @@ jobs:  # basic units of work in a run
           keys:
           - v1-build-cache-{{ .Branch }}
           - v1-build-cache
-#        - restore_cache:  # restores saved build cache
-#            keys:
-#            - v1-build-cache-{{ .Branch }}
-#            - v1-build-cache
-#
-#        - run:  # special utility that stalls main process until DB is ready
-#            name: Wait for DB
-#            command: dockerize -wait tcp://localhost:5432 -timeout 1m
-#
-#        - run: mix test  # run all tests in project
+          - run:  # special utility that stalls main process until DB is ready
+              name: Wait for DB
+              command: dockerize -wait tcp://localhost:5432 -timeout 1m
+
+          - run: mix test  # run all tests in project
 #        - restore_cache:  # restores saved build cache
 #            keys:
 #            - v1-dialyzer-cache
