@@ -55,6 +55,8 @@ jobs:  # basic units of work in a run
     working_directory: ~/app  # directory where steps will run
     steps:
       - checkout  # check out source code to working directory
+      - run: mix local.hex --force  # install Hex locally (without prompt)
+      - run: mix local.rebar --force  # fetch a copy of rebar (without prompt)
       - restore_cache:  # restores saved mix cache
           keys:  # list of cache keys, in decreasing specificity
           - v1-mix-cache-{{ .Branch }}
