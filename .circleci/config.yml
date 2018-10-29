@@ -65,3 +65,8 @@ jobs:  # basic units of work in a run
         path: _build/test/lib/game_services/test-junit-report.xml # Replace with the name of your :app
     - store_test_results:  # upload junit test results for display in Test Summary
         path: _build/test/lib/game_services_web/test-junit-report.xml # Replace with the name of your :app
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build
