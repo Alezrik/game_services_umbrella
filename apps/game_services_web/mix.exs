@@ -25,7 +25,7 @@ defmodule GameServicesWeb.MixProject do
   def application do
     [
       mod: {GameServicesWeb.Application, []},
-      extra_applications: [:logger, :runtime_tools, :ssl, :crypto, :libcluster, :swarm]
+      extra_applications: [:logger, :runtime_tools]
     ]
   end
 
