@@ -71,11 +71,11 @@ jobs:  # basic units of work in a run
 
       - run: mix test  # run all tests in project
       - store_test_results:  # upload junit test results for display in Test Summary
-          path: _build/test/lib/authentication/test-junit-report.xml # Replace with the name of your :app
+          path: _build/test/lib/authentication # Replace with the name of your :app
       - store_test_results:  # upload junit test results for display in Test Summary
-          path: _build/test/lib/game_services/test-junit-report.xml # Replace with the name of your :app
+          path: _build/test/lib/game_services # Replace with the name of your :app
       - store_test_results:  # upload junit test results for display in Test Summary
-          path: _build/test/lib/game_services_web/test-junit-report.xml # Replace with the name of your :app
+          path: _build/test/lib/game_services_web # Replace with the name of your :app
 
   dialyzer:
     parallelism: 1  # run only one instance of this job in parallel
