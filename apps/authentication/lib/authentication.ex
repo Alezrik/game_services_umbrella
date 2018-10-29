@@ -15,4 +15,17 @@ defmodule Authentication do
       {:authenticate, username, password}
     )
   end
+
+  @spec login_connection(Plug.Conn.t, %GameServices.Account.User{}) :: Plug.Conn.t
+  def login_connection(conn, user) do
+    Authentication.Guardian.Plug.sign_in(conn, user)
+  end
+
+  @spec get_connection_auth_status(%Plug.Conn{}) :: :not_authenticated | :authenticated
+  def get_connection_auth_status(conn) do
+    case Authentication.Guardian.Plug.current_token(conn) do
+      nil -> :not_authenticated
+      token -> :authenticated
+    end
+  end
 end

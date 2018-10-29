@@ -5,6 +5,8 @@
 
 <section>
   <article>
+    <h2>Connection Status</h2>
+    <ul>Authentication Status: <%= Authentication.get_connection_auth_status(@conn) %></ul>
     <h2>Links</h2>
     <ul><%= link("User", to: Routes.user_path(@conn, :index)) %></ul>
     <ul><%= link("Credential", to: Routes.credential_path(@conn, :index)) %></ul>
