@@ -62,11 +62,11 @@ jobs:  # basic units of work in a run
           keys:
           - v1-build-cache-{{ .Branch }}
           - v1-build-cache
-          - run:  # special utility that stalls main process until DB is ready
-              name: Wait for DB
-              command: dockerize -wait tcp://localhost:5432 -timeout 1m
+      - run:  # special utility that stalls main process until DB is ready
+          name: Wait for DB
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
 
-          - run: mix test  # run all tests in project
+      - run: mix test  # run all tests in project
 #        - restore_cache:  # restores saved build cache
 #            keys:
 #            - v1-dialyzer-cache
