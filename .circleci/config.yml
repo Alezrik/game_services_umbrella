@@ -57,13 +57,13 @@ jobs:  # basic units of work in a run
           POSTGRES_DB: game_services_test
           POSTGRES_PASSWORD: postgres
 
-      working_directory: ~/app  # directory where steps will run
-      steps:
-        - restore_cache:  # restores saved mix cache
-            keys:  # list of cache keys, in decreasing specificity
-            - v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
-            - v1-mix-cache-{{ .Branch }}
-            - v1-mix-cache
+    working_directory: ~/app  # directory where steps will run
+    steps:
+      - restore_cache:  # restores saved mix cache
+          keys:  # list of cache keys, in decreasing specificity
+          - v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
+          - v1-mix-cache-{{ .Branch }}
+          - v1-mix-cache
 #        - restore_cache:  # restores saved build cache
 #            keys:
 #            - v1-build-cache-{{ .Branch }}
