@@ -45,8 +45,6 @@ jobs:  # basic units of work in a run
       - save_cache: # and one more build cache for good measure
           key: v1-build-cache
           paths: "_build"
-      - persist_to_workspace:
-          root:
   test:
     parallelism: 1  # run only one instance of this job in parallel
     docker:  # run the steps with Docker
