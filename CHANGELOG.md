@@ -18,3 +18,6 @@
 * enhance documentation
 * circle-ci workflows for builds
 * user login workflow
+* Integrate Guardian Login
+* add Property Tests
+* add Code Coverage

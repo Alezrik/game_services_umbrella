@@ -7,6 +7,8 @@ defmodule Authentication do
     Attempt to retrieve a User by its Credential name and password
   """
 
+  require Logger
+
   @spec get_user_by_credential(String.t(), String.t()) ::
           {:ok, %GameServices.Account.User{}} | {:error, any()}
   def get_user_by_credential(username, password) do
@@ -16,7 +18,7 @@ defmodule Authentication do
     )
   end
 
-  @spec login_connection(Plug.Conn.t, %GameServices.Account.User{}) :: Plug.Conn.t
+  @spec login_connection(Plug.Conn.t(), %GameServices.Account.User{}) :: Plug.Conn.t()
   def login_connection(conn, user) do
     Authentication.Guardian.Plug.sign_in(conn, user)
   end

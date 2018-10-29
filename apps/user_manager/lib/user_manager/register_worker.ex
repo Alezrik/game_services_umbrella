@@ -50,7 +50,8 @@ defmodule UserManager.RegisterWorker do
 
   def create_credential(_repo, user, name, email, password) do
     u = Map.get(user, :create_user)
-    Logger.debug fn -> "user is #{inspect u}" end
+    Logger.debug(fn -> "user is #{inspect(u)}" end)
+
     GameServices.Identity.create_credential(%{
       name: name,
       email: email,

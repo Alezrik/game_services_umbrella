@@ -7,8 +7,6 @@ defmodule GameServicesWeb.RegistrationController do
   end
 
   def register(conn, %{"register" => user_params}) do
-    IO.puts(inspect(user_params))
-
     {:ok, user} =
       UserManager.register_new_user(
         Map.get(user_params, "username"),
@@ -16,7 +14,6 @@ defmodule GameServicesWeb.RegistrationController do
         Map.get(user_params, "password")
       )
 
-    IO.puts(inspect(user))
     render(conn, "index.html")
   end
 end
