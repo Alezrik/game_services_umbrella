@@ -129,3 +129,6 @@ workflows:
     - dialyzer:
         requires:
           - build
+    - credo:
+        requires:
+          - build
