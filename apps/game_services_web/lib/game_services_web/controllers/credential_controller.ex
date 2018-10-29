@@ -1,4 +1,5 @@
 defmodule GameServicesWeb.CredentialController do
+  @moduledoc false
   use GameServicesWeb, :controller
 
   alias GameServices.Identity

@@ -1,4 +1,5 @@
 defmodule GameServicesWeb.UserController do
+  @moduledoc false
   use GameServicesWeb, :controller
 
   alias GameServices.Account

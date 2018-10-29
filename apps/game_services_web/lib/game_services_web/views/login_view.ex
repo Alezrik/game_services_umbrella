@@ -1,4 +1,4 @@
-defmodule GameServicesWeb.PageView do
+defmodule GameServicesWeb.LoginView do
   @moduledoc false
   use GameServicesWeb, :view
 end

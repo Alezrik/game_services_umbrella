@@ -1,4 +1,5 @@
 defmodule GameServicesWeb.Router do
+  @moduledoc false
   use GameServicesWeb, :router
 
   pipeline :browser do
@@ -19,6 +20,10 @@ defmodule GameServicesWeb.Router do
     resources "/credentials", CredentialController
     resources "/users", UserController
     get "/", PageController, :index
+    get "/login", LoginController, :index
+    post "/login", LoginController, :login
+    get "/registration", RegistrationController, :index
+    post "/registration", RegistrationController, :register
   end
 
   # Other scopes may use custom stacks.

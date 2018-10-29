@@ -17,7 +17,7 @@ defmodule GameServices.Identity.Credential do
   @doc false
   def changeset(credential, attrs) do
     credential
-    |> cast(attrs, [:name, :email, :password])
+    |> cast(attrs, [:name, :email, :password, :user_id])
     |> validate_required([:name, :email, :password])
   end
 end

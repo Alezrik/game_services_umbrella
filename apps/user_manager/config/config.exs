@@ -2,10 +2,6 @@
 # and its dependencies with the aid of the Mix.Config module.
 use Mix.Config
 
-config :authentication, Authentication.Guardian,
-  issuer: "game_services",
-  secret_key: "UKIBly4ae8oCI1k+rLkfCcnWpBBcOfdMTM7iLTa+N4SSYdk9yqUxloDEEtERARCD"
-
 # This configuration is loaded before any dependency and is restricted
 # to this project. If another project depends on this project, this
 # file won't be loaded nor affect the parent project. For this reason,
@@ -14,11 +10,11 @@ config :authentication, Authentication.Guardian,
 
 # You can configure your application as:
 #
-#     config :authentication, key: :value
+#     config :user_manager, key: :value
 #
 # and access this configuration in your application as:
 #
-#     Application.get_env(:authentication, :key)
+#     Application.get_env(:user_manager, :key)
 #
 # You can also configure a 3rd-party app:
 #

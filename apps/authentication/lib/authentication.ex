@@ -4,23 +4,11 @@ defmodule Authentication do
   """
 
   @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> Authentication.hello()
-      :world
-
-  """
-  def hello do
-    :world
-  end
-
-  @doc """
     Attempt to retrieve a User by its Credential name and password
-
-    returns - {:ok, user} | {:error, "no user"}
   """
+
+  @spec get_user_by_credential(String.t(), String.t()) ::
+          {:ok, %GameServices.Account.User{}} | {:error, any()}
   def get_user_by_credential(username, password) do
     GenServer.call(
       {:via, :swarm, Authentication.AuthenticationWorker},

@@ -1,7 +1,6 @@
 defmodule Authentication.AuthenticationWorker do
-  @moduledoc """
-    AuthenticationWorker performs work to authenticate/identify a user
-  """
+  @moduledoc false
+
   use GenServer
 
   def start_link(_) do
