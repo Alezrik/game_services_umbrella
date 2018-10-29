@@ -11,7 +11,8 @@ defmodule Authentication.MixProject do
       lockfile: "../../mix.lock",
       elixir: "~> 1.7",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      test_coverage: [tool: ExCoveralls]
     ]
   end
 
@@ -34,7 +35,8 @@ defmodule Authentication.MixProject do
       {:swarm, "~> 3.0"},
       {:game_services, in_umbrella: true},
       {:junit_formatter, ">= 0.0.0", only: :test},
-      {:guardian, "~> 1.1.2", github: "Alezrik/guardian"}
+      {:guardian, "~> 1.1.2", github: "Alezrik/guardian"},
+      {:stream_data, "~> 0.1", only: :test}
     ]
   end
 end

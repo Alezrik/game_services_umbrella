@@ -2,6 +2,7 @@ defmodule Authentication.AuthenticationWorker do
   @moduledoc false
 
   use GenServer
+  require Logger
 
   def start_link(_) do
     {:ok, pid} = Swarm.register_name(__MODULE__, __MODULE__, :register, [])

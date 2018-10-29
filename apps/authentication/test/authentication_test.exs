@@ -8,21 +8,31 @@ defmodule AuthenticationTest do
     Ecto.Adapters.SQL.Sandbox.mode(GameServices.Repo, {:shared, self()})
   end
 
-  test "validate valid credentials" do
-    {:ok, user} = GameServices.Account.create_user(%{})
+  use ExUnitProperties
 
-    {:ok, credential} =
-      GameServices.Identity.create_credential(%{
-        name: "user",
-        password: "pass",
-        email: "blah@blah.com",
-        user_id: user.id
-      })
+  property "get_user_by_credential/2 validate valid user credentials" do
+    check all name <- string(:alphanumeric, min_length: 1, max_length: 20),
+              email <- string(:alphanumeric, min_length: 1, max_length: 20),
+              password <- string(:alphanumeric, min_length: 1, max_length: 20) do
+      {:ok, user} = GameServices.Account.create_user(%{})
 
-    {:ok, user} = Authentication.get_user_by_credential("user", "pass")
+      {:ok, credential} =
+        GameServices.Identity.create_credential(%{
+          name: name,
+          password: password,
+          email: email,
+          user_id: user.id
+        })
+
+      {:ok, user} = Authentication.get_user_by_credential(name, password)
+    end
   end
 
-  test "invalid credentials" do
-    {:error, "no user"} = Authentication.get_user_by_credential("nouser", "nopass")
+  property "get_user_by_credential/2 validate invalid user credentials" do
+    check all name <- string(:alphanumeric, min_length: 1, max_length: 20),
+              email <- string(:alphanumeric, min_length: 1, max_length: 20),
+              password <- string(:alphanumeric, min_length: 1, max_length: 20) do
+      {:error, "no user"} = Authentication.get_user_by_credential(name, password)
+    end
   end
 end

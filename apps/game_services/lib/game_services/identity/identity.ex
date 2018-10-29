@@ -1,5 +1,6 @@
 defmodule GameServices.Identity do
   require Logger
+
   @moduledoc """
   The Identity context.
   """
@@ -44,20 +45,25 @@ defmodule GameServices.Identity do
     returns {:error, "no user"} if no user is found, else {:ok, user}
 
   """
-  def get_user_by_credential_name_and_password(name, password) do
+  def get_user_by_credential_name_and_password(name, password)
+      when not is_nil(name) and not is_nil(password) do
     query =
       from c in Credential,
         where: c.name == ^name and c.password == ^password
 
-    case Repo.one(query) do
-      nil ->
+    case Repo.all(query) do
+      [] ->
         {:error, "no user"}
 
-      credential ->
-        credential = credential |> Repo.preload(:user)
-        Logger.debug fn -> "credential is #{inspect credential}" end
+      [resp] ->
+        credential = resp |> Repo.preload(:user)
+        Logger.debug(fn -> "credential is #{inspect(credential)}" end)
         {:ok, credential.user}
     end
+  end
+
+  def get_user_by_credential_name_and_password(a, b) do
+    {:error, "no user"}
   end
 
   @doc """
