@@ -45,25 +45,25 @@ jobs:  # basic units of work in a run
       - save_cache: # and one more build cache for good measure
           key: v1-build-cache
           paths: "_build"
-#  test:
-#    parallelism: 1  # run only one instance of this job in parallel
-#      docker:  # run the steps with Docker
-#      - image: circleci/elixir:1.7.3  # ...with this image as the primary container; this is where all `steps` will run
-#        environment:  # environment variables for primary container
-#          MIX_ENV: test
-#      - image: circleci/postgres:10.1-alpine  # database image
-#        environment:  # environment variables for database
-#          POSTGRES_USER: postgres
-#          POSTGRES_DB: game_services_test
-#          POSTGRES_PASSWORD: postgres
-#
-#      working_directory: ~/app  # directory where steps will run
-#      steps:
-#        - restore_cache:  # restores saved mix cache
-#            keys:  # list of cache keys, in decreasing specificity
-#            - v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
-#            - v1-mix-cache-{{ .Branch }}
-#            - v1-mix-cache
+  test:
+    parallelism: 1  # run only one instance of this job in parallel
+      docker:  # run the steps with Docker
+      - image: circleci/elixir:1.7.3  # ...with this image as the primary container; this is where all `steps` will run
+        environment:  # environment variables for primary container
+          MIX_ENV: test
+      - image: circleci/postgres:10.1-alpine  # database image
+        environment:  # environment variables for database
+          POSTGRES_USER: postgres
+          POSTGRES_DB: game_services_test
+          POSTGRES_PASSWORD: postgres
+
+      working_directory: ~/app  # directory where steps will run
+      steps:
+        - restore_cache:  # restores saved mix cache
+            keys:  # list of cache keys, in decreasing specificity
+            - v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
+            - v1-mix-cache-{{ .Branch }}
+            - v1-mix-cache
 #        - restore_cache:  # restores saved build cache
 #            keys:
 #            - v1-build-cache-{{ .Branch }}
@@ -93,6 +93,6 @@ workflows:
   build-test:
     jobs:
       - build
-#      - test
-#        requires:
-#          - build
+      - test
+        requires:
+          - build
