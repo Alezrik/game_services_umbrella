@@ -1,4 +1,5 @@
 defmodule GameServices.Identity do
+  require Logger
   @moduledoc """
   The Identity context.
   """
@@ -54,6 +55,7 @@ defmodule GameServices.Identity do
 
       credential ->
         credential = credential |> Repo.preload(:user)
+        Logger.debug fn -> "credential is #{inspect credential}" end
         {:ok, credential.user}
     end
   end

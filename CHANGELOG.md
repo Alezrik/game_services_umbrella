@@ -16,3 +16,5 @@
 * integrate circle-ci
 * user registration workflow
 * enhance documentation
+* circle-ci workflows for builds
+* user login workflow

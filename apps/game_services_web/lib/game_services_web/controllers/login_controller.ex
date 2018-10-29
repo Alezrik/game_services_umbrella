@@ -8,13 +8,16 @@ defmodule GameServicesWeb.LoginController do
   end
 
   def login(conn, %{"login" => login}) do
+    Logger.info fn -> "process login request: #{inspect login}" end
     case Authentication.get_user_by_credential(Map.get(login, "username"), Map.get(login, "password")) do
       {:ok, user} ->
-        Logger.debug("login success: #{inspect user}")
+        Logger.info(fn -> "login success: #{inspect user}" end)
         redirect(conn, to: Routes.page_path(conn, :index))
        {error, reason} ->
-         Logger.debug "login fail: #{inspect reason}"
-         render(conn, "index.html")
+         Logger.info fn -> "login fail: #{inspect reason}" end
+         conn
+         |> put_flash(:login_err, "Invalid Login Credentials")
+         |> render("index.html")
     end
 
   end

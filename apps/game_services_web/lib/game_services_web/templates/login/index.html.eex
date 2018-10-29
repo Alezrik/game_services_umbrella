@@ -3,6 +3,9 @@
 </section>
 <section>
   <article>
+  <%= if get_flash(@conn, :login_err) do %>
+    <span  class="alert"><p class="alert-danger" align="center"><%= get_flash(@conn, :login_err) %></p></span>
+  <% end %>
   <%= form_for @conn, Routes.login_path(@conn, :login), [as: :login], fn f -> %>
     <%= label f, :username  %>
     <%= text_input f, :username %>

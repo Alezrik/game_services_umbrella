@@ -1,6 +1,7 @@
 defmodule UserManager.RegisterWorker do
   @moduledoc false
   use GenServer
+  require Logger
 
   def start_link(_) do
     {:ok, pid} = Swarm.register_name(__MODULE__, __MODULE__, :register, [])
@@ -48,11 +49,13 @@ defmodule UserManager.RegisterWorker do
   end
 
   def create_credential(_repo, user, name, email, password) do
+    u = Map.get(user, :create_user)
+    Logger.debug fn -> "user is #{inspect u}" end
     GameServices.Identity.create_credential(%{
       name: name,
       email: email,
       password: password,
-      user_id: Map.get(user, :create_user).id
+      user_id: u.id
     })
   end
 
