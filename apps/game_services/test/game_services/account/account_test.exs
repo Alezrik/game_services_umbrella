@@ -20,6 +20,7 @@ defmodule GameServices.AccountTest do
     end
 
     test "list_users/0 returns all users" do
+      Enum.each(Account.list_users(), fn x -> Account.delete_user(x) end)
       user = user_fixture()
       assert Account.list_users() == [user]
     end

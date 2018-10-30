@@ -11,9 +11,9 @@ defmodule AuthenticationTest do
   use ExUnitProperties
 
   property "get_user_by_credential/2 validate valid user credentials" do
-    check all name <- string(:alphanumeric, min_length: 1, max_length: 20),
-              email <- string(:alphanumeric, min_length: 1, max_length: 20),
-              password <- string(:alphanumeric, min_length: 1, max_length: 20) do
+    check all name <- string(:alphanumeric, min_length: 5, max_length: 20),
+              email <- string(:alphanumeric, min_length: 5, max_length: 20),
+              password <- string(:alphanumeric, min_length: 5, max_length: 20) do
       {:ok, user} = GameServices.Account.create_user(%{})
 
       {:ok, credential} =
@@ -29,9 +29,9 @@ defmodule AuthenticationTest do
   end
 
   property "get_user_by_credential/2 validate invalid user credentials" do
-    check all name <- string(:alphanumeric, min_length: 1, max_length: 20),
-              email <- string(:alphanumeric, min_length: 1, max_length: 20),
-              password <- string(:alphanumeric, min_length: 1, max_length: 20) do
+    check all name <- string(:alphanumeric, min_length: 5, max_length: 20),
+              email <- string(:alphanumeric, min_length: 5, max_length: 20),
+              password <- string(:alphanumeric, min_length: 5, max_length: 20) do
       {:error, "no user"} = Authentication.get_user_by_credential(name, password)
     end
   end

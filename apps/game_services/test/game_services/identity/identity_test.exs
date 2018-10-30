@@ -6,11 +6,14 @@ defmodule GameServices.IdentityTest do
   describe "credentials" do
     alias GameServices.Identity.Credential
 
-    @valid_attrs %{email: "some email", name: "some name", password: "some password"}
+    {:ok, user} = GameServices.Account.create_user()
+
+    @valid_attrs %{email: "some email", name: "some name", password: "some password", user_id: user.id}
     @update_attrs %{
       email: "some updated email",
       name: "some updated name",
-      password: "some updated password"
+      password: "some up password",
+
     }
     @invalid_attrs %{email: nil, name: nil, password: nil}
 
@@ -52,7 +55,7 @@ defmodule GameServices.IdentityTest do
 
       assert credential.email == "some updated email"
       assert credential.name == "some updated name"
-      assert credential.password == "some updated password"
+      assert credential.password == "some up password"
     end
 
     test "update_credential/2 with invalid data returns error changeset" do

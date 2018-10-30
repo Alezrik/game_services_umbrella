@@ -18,6 +18,9 @@ defmodule GameServices.Identity.Credential do
   def changeset(credential, attrs) do
     credential
     |> cast(attrs, [:name, :email, :password, :user_id])
-    |> validate_required([:name, :email, :password])
+    |> validate_required([:name, :email, :password, :user_id])
+    |> validate_length(:name, min: 5, max: 20)
+    |> validate_length(:email, min: 5, max: 255)
+    |> validate_length(:password, min: 5, max: 20)
   end
 end

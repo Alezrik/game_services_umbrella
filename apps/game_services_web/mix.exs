@@ -41,8 +41,8 @@ defmodule GameServicesWeb.MixProject do
       {:cluster_manager, in_umbrella: true},
       {:phoenix, "~> 1.4.0-rc"},
       {:phoenix_pubsub, "~> 1.1"},
-      {:ecto, "~> 3.0-rc", override: true},
-      {:phoenix_ecto, "~> 3.5"},
+#      {:ecto, "~> 3.0-rc", override: true},
+      {:phoenix_ecto, "~> 4.0"},
       {:phoenix_html, "~> 2.11"},
       {:phoenix_live_reload, "~> 1.2-rc", only: :dev},
       {:gettext, "~> 0.11"},
@@ -52,7 +52,8 @@ defmodule GameServicesWeb.MixProject do
       {:libcluster, "~> 3.0"},
       {:swarm, "~> 3.0"},
       {:junit_formatter, ">= 0.0.0", only: :test},
-      {:authentication, in_umbrella: true}
+      {:authentication, in_umbrella: true},
+      {:user_manager, in_umbrella: true}
     ]
   end
 

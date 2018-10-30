@@ -16,9 +16,9 @@ defmodule GameServicesWeb.RegistrationControllerTest do
 
   property "POST /login valid user", %{conn: conn} do
     #
-    check all name <- string(:alphanumeric, min_length: 1, max_length: 20),
-              email <- string(:alphanumeric, min_length: 1, max_length: 20),
-              password <- string(:alphanumeric, min_length: 1, max_length: 20) do
+    check all name <- string(:alphanumeric, min_length: 5, max_length: 20),
+              email <- string(:alphanumeric, min_length: 5, max_length: 20),
+              password <- string(:alphanumeric, min_length: 5, max_length: 20) do
       {:ok, user} = GameServices.Account.create_user(%{})
 
       {:ok, credential} =
