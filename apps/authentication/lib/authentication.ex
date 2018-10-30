@@ -13,7 +13,7 @@ defmodule Authentication do
           {:ok, %GameServices.Account.User{}} | {:error, any()}
   def get_user_by_credential(username, password) do
     GenServer.call(
-      {:via, :swarm, Authentication.AuthenticationWorker},
+      ClusterManager.get_authentication_worker(),
       {:authenticate, username, password}
     )
   end

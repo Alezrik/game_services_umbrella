@@ -37,6 +37,7 @@ defmodule GameServices.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:cluster_manager, in_umbrella: true},
       {:postgrex, ">= 0.0.0-rc"},
       {:ecto, "~> 3.0-rc", override: true},
       {:ecto_sql, "~> 3.0-rc", override: true},

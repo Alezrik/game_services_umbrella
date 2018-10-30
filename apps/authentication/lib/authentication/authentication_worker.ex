@@ -5,9 +5,10 @@ defmodule Authentication.AuthenticationWorker do
   require Logger
 
   def start_link(_) do
-    {:ok, pid} = Swarm.register_name(__MODULE__, __MODULE__, :register, [])
-    Swarm.join(:authenticate, pid)
-    {:ok, pid}
+    #    {:ok, pid} = Swarm.register_name(__MODULE__, __MODULE__, :register, [])
+    #    Swarm.join(:authenticate, pid)
+    #    {:ok, pid}
+    ClusterManager.start_cluster_worker(__MODULE__, :authenticate)
   end
 
   @impl true
@@ -15,9 +16,9 @@ defmodule Authentication.AuthenticationWorker do
     {:ok, :ok}
   end
 
-  def register() do
-    GenServer.start_link(__MODULE__, name: __MODULE__)
-  end
+  #  def register() do
+  #    GenServer.start_link(__MODULE__, name: __MODULE__)
+  #  end
 
   @impl true
   def handle_call({:authenticate, username, password}, _from, state) do

@@ -172,14 +172,14 @@ workflows:
     - test:
         requires:
           - build
-    - dialyzer:
-        requires:
-          - build
+#    - dialyzer:
+#        requires:
+#          - build
     - credo:
         requires:
           - build
     - coverage:
         requires:
           - test
-          - dialyzer
+#          - dialyzer
           - credo
