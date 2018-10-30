@@ -32,4 +32,12 @@ defmodule GameServicesWeb.LoginController do
         |> render("index.html")
     end
   end
+
+  def logout(conn, _params) do
+    Logger.info(fn -> "Logout Connection" end)
+    conn
+    |> Authentication.logout_connection()
+    |> redirect(to: Routes.page_path(conn, :index))
+  end
+
 end
