@@ -8,16 +8,16 @@ defmodule ClusterManager do
   @cluster_active Application.get_env(:cluster_manager, :cluster_status, false)
 
   @doc """
-  gets the tag to call the Authentication Worker's GenServer
-"""
+    gets the tag to call the Authentication Worker's GenServer
+  """
   @spec get_authentication_worker(boolean()) :: {atom(), atom(), module()} | module()
   def get_authentication_worker(get_swarm \\ @cluster_active) do
     get_gensever_name(Authentication.AuthenticationWorker, get_swarm)
   end
 
   @doc """
-  gets the tag to callt he Registration Worker's GenServer
-"""
+    gets the tag to callt he Registration Worker's GenServer
+  """
   @spec get_registration_worker(boolean()) :: {atom(), atom(), module()} | module()
   def get_registration_worker(get_swarm \\ @cluster_active) do
     get_gensever_name(UserManager.RegisterWorker, get_swarm)
@@ -47,8 +47,8 @@ defmodule ClusterManager do
   end
 
   @doc """
-  Starts a GenServer
-"""
+    Starts a GenServer
+  """
   @spec start_genserver(module(), list()) :: {:ok, any()} | {:error, any()}
   def start_genserver(name, opts \\ []) do
     GenServer.start_link(name, opts, name: name)

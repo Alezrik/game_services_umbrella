@@ -39,8 +39,8 @@ defmodule GameServices.MixProject do
     [
       {:cluster_manager, in_umbrella: true},
       {:postgrex, ">= 0.0.0-rc"},
-      {:ecto, "~> 3.0-rc", override: true},
-      {:ecto_sql, "~> 3.0-rc", override: true},
+      #      {:ecto, "~> 3.0-rc", override: true},
+      {:ecto_sql, "~> 3.0-rc"},
       {:junit_formatter, ">= 0.0.0", only: :test}
     ]
   end
