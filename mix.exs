@@ -7,7 +7,10 @@ defmodule GameServices.Umbrella.MixProject do
       version: "0.1.0",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      dialyzer: [plt_add_apps: [:dialyzer, :elixir, :kernel, :mix, :stdlib], ignore_warnings: "dialyzer.ignore-warnings"],
+      dialyzer: [
+        plt_add_apps: [:dialyzer, :elixir, :kernel, :mix, :stdlib],
+        ignore_warnings: "dialyzer.ignore-warnings"
+      ],
       # better name pending
       name: "GameServicesUmbrella",
       source_url: "https://github.com/Alezrik/game_services_umbrella",

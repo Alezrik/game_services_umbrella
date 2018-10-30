@@ -8,12 +8,16 @@ defmodule GameServices.IdentityTest do
 
     {:ok, user} = GameServices.Account.create_user()
 
-    @valid_attrs %{email: "some email", name: "some name", password: "some password", user_id: user.id}
+    @valid_attrs %{
+      email: "some email",
+      name: "some name",
+      password: "some password",
+      user_id: user.id
+    }
     @update_attrs %{
       email: "some updated email",
       name: "some updated name",
-      password: "some up password",
-
+      password: "some up password"
     }
     @invalid_attrs %{email: nil, name: nil, password: nil}
 

@@ -3,7 +3,6 @@ defmodule Authentication do
   Documentation for Authentication.
   """
 
-
   require Logger
 
   @doc """
@@ -19,24 +18,24 @@ defmodule Authentication do
   end
 
   @doc """
-  insert Authentication Token into Http Conn
-"""
+    insert Authentication Token into Http Conn
+  """
   @spec login_connection(Plug.Conn.t(), %GameServices.Account.User{}) :: Plug.Conn.t()
   def login_connection(conn, user) do
     Authentication.Guardian.Plug.sign_in(conn, user)
   end
 
   @doc """
-  remove Authentication Token from Http Conn
-"""
+    remove Authentication Token from Http Conn
+  """
   @spec logout_connection(Plug.Conn.t()) :: Plug.Conn.t()
   def logout_connection(conn) do
     Authentication.Guardian.Plug.sign_out(conn)
   end
 
   @doc """
-  get the Connections current authentication status
-"""
+    get the Connections current authentication status
+  """
   @spec get_connection_auth_status(%Plug.Conn{}) :: :not_authenticated | :authenticated
   def get_connection_auth_status(conn) do
     case Authentication.Guardian.Plug.current_token(conn) do

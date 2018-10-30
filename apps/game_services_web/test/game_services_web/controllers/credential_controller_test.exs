@@ -1,10 +1,7 @@
 defmodule GameServicesWeb.CredentialControllerTest do
   use GameServicesWeb.ConnCase
-  
+
   alias GameServices.Identity
-
-
-
 
   @update_attrs %{
     email: "some updated email",
@@ -14,7 +11,13 @@ defmodule GameServicesWeb.CredentialControllerTest do
   @invalid_attrs %{email: nil, name: nil, password: nil}
 
   def fixture(:credential) do
-    create_attrs = %{email: "some email", name: "some name", password: "some password", user_id: GameServicesWeb.CreateUser.get_user().id}
+    create_attrs = %{
+      email: "some email",
+      name: "some name",
+      password: "some password",
+      user_id: GameServicesWeb.CreateUser.get_user().id
+    }
+
     {:ok, credential} = Identity.create_credential(create_attrs)
     credential
   end
@@ -35,7 +38,12 @@ defmodule GameServicesWeb.CredentialControllerTest do
 
   describe "create credential" do
     test "redirects to show when data is valid", %{conn: conn} do
-      create_attrs = %{email: "some email", name: "some name", password: "some password", user_id: GameServicesWeb.CreateUser.get_user().id}
+      create_attrs = %{
+        email: "some email",
+        name: "some name",
+        password: "some password",
+        user_id: GameServicesWeb.CreateUser.get_user().id
+      }
 
       conn = post(conn, Routes.credential_path(conn, :create), credential: create_attrs)
 
@@ -99,6 +107,4 @@ defmodule GameServicesWeb.CredentialControllerTest do
     credential = fixture(:credential)
     {:ok, credential: credential}
   end
-
-
 end
