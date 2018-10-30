@@ -12,5 +12,6 @@
     <ul><%= link("Credential", to: Routes.credential_path(@conn, :index)) %></ul>
     <ul><%= link("User Registration", to: Routes.registration_path(@conn, :index)) %></ul>
     <ul><%= link("Login", to: Routes.login_path(@conn, :index)) %></ul>
+    <ul><%= link("Logout", to: Routes.login_path(@conn, :logout)) %></ul>
   </article>
 </section>
