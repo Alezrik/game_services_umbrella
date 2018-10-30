@@ -4,9 +4,10 @@ defmodule UserManager.RegisterWorker do
   require Logger
 
   def start_link(_) do
-    {:ok, pid} = Swarm.register_name(__MODULE__, __MODULE__, :register, [])
-    Swarm.join(:user_register, pid)
-    {:ok, pid}
+    #    {:ok, pid} = Swarm.register_name(__MODULE__, __MODULE__, :register, [])
+    #    Swarm.join(:user_register, pid)
+    #    {:ok, pid}
+    ClusterManager.start_cluster_worker(__MODULE__, :register)
   end
 
   @impl true
@@ -14,9 +15,9 @@ defmodule UserManager.RegisterWorker do
     {:ok, :ok}
   end
 
-  def register() do
-    GenServer.start_link(__MODULE__, name: __MODULE__)
-  end
+  #  def register() do
+  #    GenServer.start_link(__MODULE__, name: __MODULE__)
+  #  end
 
   def handle_call({:register_user, name, email, password}, _from, state) do
     multi =

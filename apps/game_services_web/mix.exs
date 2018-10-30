@@ -38,6 +38,7 @@ defmodule GameServicesWeb.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:cluster_manager, in_umbrella: true},
       {:phoenix, "~> 1.4.0-rc"},
       {:phoenix_pubsub, "~> 1.1"},
       {:ecto, "~> 3.0-rc", override: true},

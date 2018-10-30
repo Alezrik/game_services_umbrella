@@ -10,7 +10,7 @@ defmodule UserManager do
           {:ok, %GameServices.Account.User{}} | {:error, any()}
   def register_new_user(name, email, password) do
     GenServer.call(
-      {:via, :swarm, UserManager.RegisterWorker},
+      ClusterManager.get_registration_worker(),
       {:register_user, name, email, password}
     )
   end

@@ -102,7 +102,7 @@ mix kubernetes deploy
 Verify Cluster / Kubernetes Deployment
 
 ```bash
-minikube dashboard
+**minikube dashboard**
 ```
 
 
@@ -124,6 +124,7 @@ mix test
 
 ## Elixir OTP Apps
 * [authentication](apps/authentication/README.md) - Authentication Service
+* [cluster_manager](apps/cluster_manager/README.md) - Cluster Manager Service
 * [game_services](apps/game_services/README.md) - Database Services
 * [game_services_web](apps/game_services_web/README.md) - [Pheonixframework](http://www.phoenixframework.org) - HTTP Frontend Service
 * [mix_docker](apps/mix_docker/README.md) - mix tasks for interacting with docker

@@ -21,3 +21,6 @@
 * Integrate Guardian Login
 * add Property Tests
 * add Code Coverage
+* create cluster manager
+* cluster manager switches swarm on and off depending on config
+* disabled dialyzer - https://github.com/Alezrik/game_services_umbrella/issues/22

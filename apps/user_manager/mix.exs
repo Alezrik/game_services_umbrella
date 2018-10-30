@@ -27,6 +27,7 @@ defmodule UserManager.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:cluster_manager, in_umbrella: true},
       {:ecto, "~> 3.0-rc", override: true},
       {:game_services, in_umbrella: true},
       {:libcluster, "~> 3.0"},
