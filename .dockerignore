@@ -13,4 +13,4 @@ deps
 erl_crash.dump
 
 # Static artifacts
-node_modules
+./apps/game_services_web/assets/node_modules/

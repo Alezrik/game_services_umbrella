@@ -57,6 +57,18 @@ Switch to Minikube docker service
 eval $(minikube docker-env)
 ```
 
+NOTE Windows requires you to copy and paste the result of
+
+```windows
+E:\game_services_umbrella>minikube docker-env
+SET DOCKER_TLS_VERIFY=1
+SET DOCKER_HOST=tcp://192.168.99.100:2376
+SET DOCKER_CERT_PATH=C:\Users\ex_ra\.minikube\certs
+SET DOCKER_API_VERSION=1.35
+REM Run this command to configure your shell:
+REM @FOR /f "tokens=*" %i IN ('minikube docker-env') DO @%i
+```
+
 Build Services Umbrella
 
 ```bash
@@ -102,7 +114,7 @@ mix kubernetes deploy
 Verify Cluster / Kubernetes Deployment
 
 ```bash
-**minikube dashboard**
+minikube dashboard
 ```
 
 

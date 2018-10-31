@@ -4,8 +4,8 @@
 
 FROM alezrik/game_services_umbrella:builder
 ENV DEBIAN_FRONTEND=noninteractive
-
-COPY . .
+RUN whoami
+COPY --chown=root . .
 RUN mix deps.get
 RUN mix deps.compile
 RUN cd apps/game_services_web/assets && npm install && node node_modules/webpack/bin/webpack.js --mode production && cd ../../.. \

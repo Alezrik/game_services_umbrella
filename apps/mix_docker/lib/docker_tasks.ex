@@ -62,6 +62,7 @@ defmodule Mix.Tasks.Docker do
       "build_umbrella" ->
         #        {:ok, res, result} =
         #          execute_shell_with_output("docker pull 127.0.0.1:5000/game_services_umbrella:build")
+        IO.puts(get_version())
 
         {:ok, res, result} =
           execute_shell_with_output(
@@ -82,7 +83,8 @@ defmodule Mix.Tasks.Docker do
       #          execute_shell_with_output("docker push 127.0.0.1:5000/game_services_umbrella:compile")
 
       "build_release" ->
-        execute_shell_with_output("rm game_services_umbrella.tar.gz")
+        if File.exists?("game_services_umbrella.tar.gz"),
+          do: File.rm("game_services_umbrella.tar.gz")
 
         {:ok, res, result} =
           execute_shell_with_output(
@@ -153,5 +155,6 @@ defmodule Mix.Tasks.Docker do
     |> Enum.map(fn x -> String.replace(x, "\"", "") end)
     |> Enum.map(fn x -> String.replace(x, ",", "") end)
     |> List.first()
+    |> String.replace("\r", "")
   end
 end
