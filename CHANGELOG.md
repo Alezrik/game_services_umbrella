@@ -1,5 +1,8 @@
 # Game Services Umbrella Change Log
 
+## 0.2.0
+* Implement TCP Server
+
 ## 0.1.0
 * integrate libcluster
 * integrate swarm
