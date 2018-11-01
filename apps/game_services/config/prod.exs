@@ -12,7 +12,7 @@ config :game_services, GameServices.Repo,
   pool_size: 20
 
 #  for running migration in console
-#config :game_services, GameServices.Repo,
+# config :game_services, GameServices.Repo,
 #       hostname: "localhost",
 #       username: "postgres",
 #       password: "postgres",

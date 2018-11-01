@@ -14,27 +14,42 @@ defmodule GameServicesWeb.RegistrationControllerTest do
     assert html_response(conn, 200) =~ "register"
   end
 
-  property "POST /login valid user", %{conn: conn} do
+  property "POST /register valid user", %{conn: conn} do
     #
     check all name <- string(:alphanumeric, min_length: 5, max_length: 20),
               email <- string(:alphanumeric, min_length: 5, max_length: 20),
               password <- string(:alphanumeric, min_length: 5, max_length: 20) do
-      {:ok, user} = GameServices.Account.create_user(%{})
+      Enum.map(GameServices.Identity.list_credentials(), fn x ->
+        GameServices.Identity.delete_credential(x)
+      end)
 
-      {:ok, credential} =
-        GameServices.Identity.create_credential(%{
-          name: name,
-          password: password,
-          email: email,
-          user_id: user.id
-        })
+      Enum.map(GameServices.Account.list_users(), fn x -> nil end)
 
       conn =
         post(conn, "/registration", %{
           "register" => %{username: name, password: password, email: email}
         })
 
-      assert html_response(conn, 200) =~ "register"
+      assert redirected_to(conn) == Routes.page_path(conn, :index)
+    end
+  end
+  property "POST /register invalid user", %{conn: conn} do
+    #
+    check all name <- string(:alphanumeric, min_length: 0, max_length: 4),
+          email <- string(:alphanumeric, min_length: 0, max_length: 4),
+          password <- string(:alphanumeric, min_length: 0, max_length: 4) do
+      Enum.map(GameServices.Identity.list_credentials(), fn x ->
+        GameServices.Identity.delete_credential(x)
+      end)
+
+      Enum.map(GameServices.Account.list_users(), fn x -> nil end)
+
+      conn =
+        post(conn, "/registration", %{
+          "register" => %{username: name, password: password, email: email}
+        })
+
+      assert html_response(conn, 200) =~ "Invalid Register Credentials"
     end
   end
 end

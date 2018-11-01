@@ -78,5 +78,25 @@ defmodule GameServices.IdentityTest do
       credential = credential_fixture()
       assert %Ecto.Changeset{} = Identity.change_credential(credential)
     end
+
+    use ExUnitProperties
+
+    property "get_user_by_credential_name_and_password/2 gets a user" do
+      check all name <- string(:alphanumeric, min_length: 5, max_length: 20),
+                email <- string(:alphanumeric, min_length: 5, max_length: 20),
+                password <- string(:alphanumeric, min_length: 5, max_length: 20) do
+        {:ok, user} = GameServices.Account.create_user(%{})
+
+        {:ok, credential} =
+          GameServices.Identity.create_credential(%{
+            name: name,
+            password: password,
+            email: email,
+            user_id: user.id
+          })
+
+          {:ok, user} = Identity.get_user_by_credential_name_and_password(name, password)
+      end
+    end
   end
 end

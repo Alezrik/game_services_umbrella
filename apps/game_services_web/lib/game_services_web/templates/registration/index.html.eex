@@ -3,9 +3,14 @@
 </section>
 <section>
   <article>
+  <%= if get_flash(@conn, :register_err) do %>
+      <span  class="alert"><p class="alert-danger" align="center"><%= get_flash(@conn, :register_err) %></p></span>
+    <% end %>
+
   <%= form_for @conn, Routes.registration_path(@conn, :register), [as: :register], fn f -> %>
     <%= label f, :username  %>
     <%= text_input f, :username %>
+    <%= error_tag f, :name %>
 
     <%= label f, :email %>
     <%= text_input f, :email %>
