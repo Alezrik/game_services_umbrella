@@ -95,7 +95,7 @@ defmodule GameServices.IdentityTest do
             user_id: user.id
           })
 
-          {:ok, user} = Identity.get_user_by_credential_name_and_password(name, password)
+        {:ok, user} = Identity.get_user_by_credential_name_and_password(name, password)
       end
     end
   end
