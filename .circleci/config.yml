@@ -76,6 +76,9 @@ jobs:  # basic units of work in a run
           path: _build/test/lib/game_services # Replace with the name of your :app
       - store_test_results:  # upload junit test results for display in Test Summary
           path: _build/test/lib/game_services_web # Replace with the name of your :app
+      - store_test_results:  # upload junit test results for display in Test Summary
+          path: _build/test/lib/user_manager # Replace with the name of your :app
+
 
   dialyzer:
     parallelism: 1  # run only one instance of this job in parallel
