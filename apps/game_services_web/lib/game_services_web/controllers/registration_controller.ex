@@ -7,13 +7,30 @@ defmodule GameServicesWeb.RegistrationController do
   end
 
   def register(conn, %{"register" => user_params}) do
-    {:ok, user} =
-      UserManager.register_new_user(
-        Map.get(user_params, "username"),
-        Map.get(user_params, "email"),
-        Map.get(user_params, "password")
-      )
+    case UserManager.register_new_user(
+           Map.get(user_params, "username"),
+           Map.get(user_params, "email"),
+           Map.get(user_params, "password")
+         ) do
+      {:ok, user} ->
+        redirect(conn, to: Routes.page_path(conn, :index))
 
-    render(conn, "index.html")
+      {:error, :create_credential, changeset, _other} ->
+        err =
+          Enum.map(changeset.errors, fn x ->
+            {name, {msg, opts}} = x
+
+            if count = opts[:count] do
+              "#{name} " <>
+                Gettext.dngettext(GameServicesWeb.Gettext, "errors", msg, msg, count, opts)
+            else
+              "#{name} " <> Gettext.dgettext(GameServicesWeb.Gettext, "errors", msg, opts)
+            end
+          end)
+
+        conn
+        |> put_flash(:register_err, "Invalid Register Credentials - #{Enum.join(err, " , ")} -- ")
+        |> render("index.html")
+    end
   end
 end

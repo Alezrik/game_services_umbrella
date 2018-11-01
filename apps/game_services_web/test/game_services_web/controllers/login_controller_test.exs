@@ -10,7 +10,7 @@ defmodule GameServicesWeb.LoginControllerTest do
   #  end
 
   test "GET /login", %{conn: conn} do
-    conn = get(conn, "/")
+    conn = get(conn, "/login")
     assert html_response(conn, 200) =~ "login"
   end
 
@@ -31,6 +31,10 @@ defmodule GameServicesWeb.LoginControllerTest do
 
       conn = post(conn, "/login", %{"login" => %{username: name, password: password}})
       assert redirected_to(conn) == Routes.page_path(conn, :index)
+      Authentication.Guardian.Plug.authenticated?(conn) == true
+      conn = get(conn, "logout")
+      assert redirected_to(conn) == Routes.page_path(conn, :index)
+      Authentication.Guardian.Plug.authenticated?(conn) == false
     end
   end
 

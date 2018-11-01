@@ -22,5 +22,9 @@ defmodule GameServices.Identity.Credential do
     |> validate_length(:name, min: 5, max: 20)
     |> validate_length(:email, min: 5, max: 255)
     |> validate_length(:password, min: 5, max: 20)
+    |> unsafe_validate_unique(:name, GameServices.Repo)
+    |> unsafe_validate_unique(:email, GameServices.Repo)
+    |> unique_constraint(:name)
+    |> unique_constraint(:email)
   end
 end

@@ -28,4 +28,7 @@
 * credential input requirements
 * update to phoenix 1.4-rc3
 * fix builds and deploy for windows - https://github.com/Alezrik/game_services_umbrella/issues/26
+* added some basic requirements for Credentials
+* Register now has messages
+* added more unit tests
 
