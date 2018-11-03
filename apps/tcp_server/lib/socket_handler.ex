@@ -1,10 +1,12 @@
-defmodule AsyncAck.Handler do
+defmodule TcpServer.SocketHandler do
+  @moduledoc false
+
   def start_link(ref, socket, transport, opts) do
     pid = spawn_link(__MODULE__, :init, [ref, socket, transport, opts])
     {:ok, pid}
   end
 
-  def init(ref, socket, transport, _Opts = []) do
+  def init(ref, socket, transport, _opts \\ []) do
     :ok = :ranch.accept_ack(ref)
     transport.setopts(socket, nodelay: true)
     responder_pid = spawn_link(__MODULE__, :responder, [socket, transport, <<>>, [], 0])
@@ -66,7 +68,7 @@ defmodule AsyncAck.Handler do
       {:ok, packet} ->
         {:message_queue_len, length} = :erlang.process_info(responder_pid, :message_queue_len)
 
-        if(length > 100) do
+        if length > 100 do
           :timer.sleep(div(length, 100))
         end
 

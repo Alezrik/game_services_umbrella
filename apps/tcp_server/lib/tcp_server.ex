@@ -1,5 +1,6 @@
 defmodule TcpServer do
   # server process thanks to http://dbeck.github.io/Wrapping-up-my-Elixir-TCP-experiments/
+  @moduledoc false
   use Application
 
   def start(_type, _args) do
