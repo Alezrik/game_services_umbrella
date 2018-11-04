@@ -4,6 +4,10 @@ defmodule Authentication.MixProject do
   def project do
     [
       app: :authentication,
+      dialyzer: [
+        plt_add_apps: [:dialyzer, :elixir, :kernel, :mix, :stdlib, :guardian, :plug],
+        plt_add_deps: :transitive
+      ],
       version: "0.1.0",
       build_path: "../../_build",
       config_path: "../../config/config.exs",

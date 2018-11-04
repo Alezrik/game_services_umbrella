@@ -21,6 +21,11 @@ defmodule GameServicesWeb.RegistrationController do
         conn
         |> put_flash(:register_err, "Invalid Register Credentials - #{Enum.join(err, " , ")} -- ")
         |> render("index.html")
+
+      other ->
+        conn
+        |> put_flash(:register_err, "unknown error")
+        |> render("index.html")
     end
   end
 

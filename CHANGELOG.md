@@ -2,6 +2,8 @@
 
 ## 0.2.0
 * Implement TCP Server
+# re-enable dialyzer
+
 
 ## 0.1.0
 * integrate libcluster

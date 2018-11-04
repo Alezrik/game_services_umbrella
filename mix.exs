@@ -9,7 +9,8 @@ defmodule GameServices.Umbrella.MixProject do
       deps: deps(),
       dialyzer: [
         plt_add_apps: [:dialyzer, :elixir, :kernel, :mix, :stdlib],
-        ignore_warnings: "dialyzer.ignore-warnings"
+        plt_add_deps: :transitive,
+        ignore_warnings: ".dialyzer-ignore"
       ],
       # better name pending
       name: "GameServicesUmbrella",
@@ -38,7 +39,7 @@ defmodule GameServices.Umbrella.MixProject do
     [
       {:distillery, "~> 2.0"},
       {:credo, "~> 0.10.0", only: [:dev, :test], runtime: false},
-      {:dialyxir, "~> 1.0.0-rc.3", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 1.0.0-rc.4", only: [:dev, :test], runtime: false},
       {:ex_doc, "~> 0.19", only: :dev, runtime: false},
       {:excoveralls, "~> 0.10", only: :test}
     ]
