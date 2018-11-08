@@ -1,6 +1,8 @@
 defmodule TcpServer.SocketHandler do
   @moduledoc false
 
+  require Logger
+
   def start_link(ref, socket, transport, opts) do
     pid = spawn_link(__MODULE__, :init, [ref, socket, transport, opts])
     {:ok, pid}
