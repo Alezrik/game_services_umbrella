@@ -1,13 +1,9 @@
-defmodule Authentication.MixProject do
+defmodule TcpServer.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :authentication,
-      dialyzer: [
-        plt_add_apps: [:dialyzer, :elixir, :kernel, :mix, :stdlib, :guardian, :plug],
-        plt_add_deps: :transitive
-      ],
+      app: :tcp_server,
       version: "0.1.0",
       build_path: "../../_build",
       config_path: "../../config/config.exs",
@@ -23,25 +19,18 @@ defmodule Authentication.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger],
-      mod: {Authentication.Application, []}
+      extra_applications: [:logger, :ranch],
+      mod: {TcpServer, []}
     ]
   end
 
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:cowboy, "~> 2.5.0"}
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"},
       # {:sibling_app_in_umbrella, in_umbrella: true},
-
-      {:cluster_manager, in_umbrella: true},
-      {:libcluster, "~> 3.0"},
-      {:swarm, "~> 3.0"},
-      {:game_services, in_umbrella: true},
-      {:junit_formatter, ">= 0.0.0", only: :test},
-      {:guardian, "~> 1.1.2", github: "Alezrik/guardian"},
-      {:stream_data, "~> 0.1", only: :test}
     ]
   end
 end

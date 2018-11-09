@@ -33,11 +33,12 @@ defmodule GameServicesWeb.RegistrationControllerTest do
       assert redirected_to(conn) == Routes.page_path(conn, :index)
     end
   end
+
   property "POST /register invalid user", %{conn: conn} do
     #
     check all name <- string(:alphanumeric, min_length: 0, max_length: 4),
-          email <- string(:alphanumeric, min_length: 0, max_length: 4),
-          password <- string(:alphanumeric, min_length: 0, max_length: 4) do
+              email <- string(:alphanumeric, min_length: 0, max_length: 4),
+              password <- string(:alphanumeric, min_length: 0, max_length: 4) do
       Enum.map(GameServices.Identity.list_credentials(), fn x ->
         GameServices.Identity.delete_credential(x)
       end)

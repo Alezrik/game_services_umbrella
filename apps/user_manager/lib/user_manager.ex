@@ -7,7 +7,7 @@ defmodule UserManager do
     Register a New User Account
   """
   @spec register_new_user(String.t(), String.t(), String.t()) ::
-          {:ok, %GameServices.Account.User{}} | {:error, any()}
+          {:ok, %GameServices.Account.User{}} | {:error, atom(), any(), any()}
   def register_new_user(name, email, password) do
     GenServer.call(
       ClusterManager.get_registration_worker(),

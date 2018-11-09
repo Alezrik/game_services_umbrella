@@ -16,17 +16,22 @@ defmodule GameServicesWeb.RegistrationController do
         redirect(conn, to: Routes.page_path(conn, :index))
 
       {:error, :create_credential, changeset, _other} ->
-        err =
-          Enum.map(changeset.errors, fn x -> get_errors_text(x) end)
+        err = Enum.map(changeset.errors, fn x -> get_errors_text(x) end)
+
         conn
         |> put_flash(:register_err, "Invalid Register Credentials - #{Enum.join(err, " , ")} -- ")
         |> render("index.html")
+
+      other ->
+        conn
+        |> put_flash(:register_err, "unknown error")
+        |> render("index.html")
     end
   end
+
   defp get_errors_text({name, {msg, opts}}) do
     if count = opts[:count] do
-      "#{name} " <>
-      Gettext.dngettext(GameServicesWeb.Gettext, "errors", msg, msg, count, opts)
+      "#{name} " <> Gettext.dngettext(GameServicesWeb.Gettext, "errors", msg, msg, count, opts)
     else
       "#{name} " <> Gettext.dgettext(GameServicesWeb.Gettext, "errors", msg, opts)
     end
