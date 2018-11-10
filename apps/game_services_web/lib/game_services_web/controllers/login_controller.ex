@@ -23,7 +23,7 @@ defmodule GameServicesWeb.LoginController do
         |> Authentication.login_connection(user)
         |> redirect(to: Routes.page_path(conn, :index))
 
-      {error, reason} ->
+      {_error, reason} ->
         Logger.info(fn -> "login fail: #{inspect(reason)}" end)
         Logger.debug(fn -> inspect(GameServices.Identity.list_credentials()) end)
 

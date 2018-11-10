@@ -13,7 +13,7 @@ defmodule TcpServerTest do
     :gen_tcp.send(conn, [<<id::size(id_sz)>>, <<sz::size(sz_sz)>>] ++ m)
 
     case :gen_tcp.recv(conn, 0, 5000) do
-      {:ok, data} ->
+      {:ok, _data} ->
         :gen_tcp.close(conn)
 
       {:error, reason} ->
