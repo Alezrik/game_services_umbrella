@@ -2,8 +2,9 @@
 
 ## 0.2.0
 * Implement TCP Server
-# re-enable dialyzer
-
+* re-enable dialyzer
+* bump phoenix to 1.4
+* integration tcp into authentication workflow
 
 ## 0.1.0
 * integrate libcluster
