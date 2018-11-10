@@ -62,7 +62,7 @@ defmodule GameServices.Identity do
     end
   end
 
-  def get_user_by_credential_name_and_password(a, b) do
+  def get_user_by_credential_name_and_password(_a, _b) do
     {:error, "no user"}
   end
 

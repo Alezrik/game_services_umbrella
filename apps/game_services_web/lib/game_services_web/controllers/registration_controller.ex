@@ -12,7 +12,7 @@ defmodule GameServicesWeb.RegistrationController do
            Map.get(user_params, "email"),
            Map.get(user_params, "password")
          ) do
-      {:ok, user} ->
+      {:ok, _user} ->
         redirect(conn, to: Routes.page_path(conn, :index))
 
       {:error, :create_credential, changeset, _other} ->
@@ -22,7 +22,7 @@ defmodule GameServicesWeb.RegistrationController do
         |> put_flash(:register_err, "Invalid Register Credentials - #{Enum.join(err, " , ")} -- ")
         |> render("index.html")
 
-      other ->
+      _other ->
         conn
         |> put_flash(:register_err, "unknown error")
         |> render("index.html")

@@ -40,7 +40,7 @@ defmodule Authentication do
   def get_connection_auth_status(conn) do
     case Authentication.Guardian.Plug.current_token(conn) do
       nil -> :not_authenticated
-      token -> :authenticated
+      _token -> :authenticated
     end
   end
 end
