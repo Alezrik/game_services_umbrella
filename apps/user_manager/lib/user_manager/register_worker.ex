@@ -28,8 +28,7 @@ defmodule UserManager.RegisterWorker do
       Task.Supervisor.async(UserManager.TaskSupervisor, fn ->
         case GameServices.Repo.transaction(multi) do
           {:ok, credential} ->
-            user = Map.get(credential, :get_user)
-            {:reply, {:ok, user}, state}
+            process_create_success(credential, state)
 
           other ->
             {:reply, other, state}
@@ -37,6 +36,17 @@ defmodule UserManager.RegisterWorker do
       end)
 
     Task.await(task)
+  end
+
+  def process_create_success(credential, state) do
+    user = Map.get(credential, :get_user)
+
+    Logger.info(fn -> "DB Registration Success" end,
+      user_id: user.id,
+      username: Map.get(credential, :create_credential).name
+    )
+
+    {:reply, {:ok, user}, state}
   end
 
   def create_user(_a, _b) do

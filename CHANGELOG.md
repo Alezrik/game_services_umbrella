@@ -4,7 +4,9 @@
 * Implement TCP Server
 * re-enable dialyzer
 * bump phoenix to 1.4
-* integration tcp into authentication workflow
+* introduce a tcp command processor
+* fix up logging in all apps
+
 
 ## 0.1.0
 * integrate libcluster

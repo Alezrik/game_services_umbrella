@@ -1,0 +1,2 @@
+defmodule TcpServer.Workflows.CmsgAuthenticateChallenge do
+end

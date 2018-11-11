@@ -7,18 +7,14 @@ use Mix.Config
 # file won't be loaded nor affect the parent project. For this reason,
 # if you want to provide default values for your application for
 # 3rd-party users, it should be done in your "mix.exs" file.
-config :logger,
-  level: :error,
-  format: {LogFormatter, :format},
-  metadata: :all
 
 # You can configure your application as:
 #
-#     config :tcp_server, key: :value
+#     config :logger_backend, key: :value
 #
 # and access this configuration in your application as:
 #
-#     Application.get_env(:tcp_server, :key)
+#     Application.get_env(:logger_backend, :key)
 #
 # You can also configure a 3rd-party app:
 #

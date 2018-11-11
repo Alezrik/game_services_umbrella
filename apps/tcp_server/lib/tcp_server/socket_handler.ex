@@ -32,15 +32,14 @@ defmodule TcpServer.SocketHandler do
   end
 
   def flush(_socket, _transport, _ack_list) do
-#    Logger.warn "ack_list: #{inspect ack_list}"
-#    [{id, _} | _] = ack_list
-#    skipped = calc_skipped(ack_list)
-#    GenServer.cast(ClusterManager.get_tcp_command_processor(), {:process, id, ack_list, socket, transport})
-
+    #    Logger.warn "ack_list: #{inspect ack_list}"
+    #    [{id, _} | _] = ack_list
+    #    skipped = calc_skipped(ack_list)
+    #    GenServer.cast(ClusterManager.get_tcp_command_processor(), {:process, id, ack_list, socket, transport})
   end
 
   def responder(socket, transport, yet_to_parse, ack_list, packet_count) do
-#    Logger.warn "top yet_to_parse: #{inspect yet_to_parse}"
+    #    Logger.warn "top yet_to_parse: #{inspect yet_to_parse}"
     ##    Logger.warn "top ack_list: #{inspect ack_list}"
     ##    Logger.warn "packet_count: #{inspect packet_count}"
     receive do
@@ -48,6 +47,7 @@ defmodule TcpServer.SocketHandler do
         case parse(yet_to_parse <> packet, <<>>, 0, transport, socket) do
           {not_yet_parsed, {id, skipped}} ->
             new_ack_list = [{id, skipped} | ack_list]
+
             if packet_count > 20 do
               flush(socket, transport, new_ack_list)
               responder(socket, transport, not_yet_parsed, [], 0)
@@ -109,14 +109,20 @@ defmodule TcpServer.SocketHandler do
   defp parse(packet, <<>>, 0, transport, socket) do
     case packet do
       <<id::binary-size(8), sz::little-size(32), data::binary-size(sz)>> when sz < 1_000_000 ->
+        GenServer.cast(
+          ClusterManager.get_tcp_command_processor(),
+          {:process, id, data <> <<0>>, socket, transport}
+        )
 
-        GenServer.cast(ClusterManager.get_tcp_command_processor(), {:process, id, data <> <<0>>, socket, transport})
         {<<>>, {id, 0}}
 
       <<id::binary-size(8), sz::little-size(32), data::binary-size(sz), rest::binary>>
       when sz < 100 ->
+        GenServer.cast(
+          ClusterManager.get_tcp_command_processor(),
+          {:process, id, data <> <<0>>, socket, transport}
+        )
 
-        GenServer.cast(ClusterManager.get_tcp_command_processor(), {:process, id, data <> <<0>>, socket, transport})
         parse(rest, id, 0, transport, socket)
 
       unparsed ->

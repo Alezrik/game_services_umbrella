@@ -13,9 +13,10 @@ use Mix.Config
 import_config "../apps/*/config/config.exs"
 
 # Configures Elixir's Logger
-config :logger, :console,
-  format: "$time $metadata[$level] $message\n",
-  metadata: [:request_id]
+config :logger,
+       level: :error,
+       format: {LogFormatter, :format},
+       metadata: :all
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
