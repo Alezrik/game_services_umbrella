@@ -11,7 +11,7 @@ defmodule TcpServer.Workflows.CmsgAuthenticateChallenge do
   end
 
   defp execute(params, opts) do
-    server_rnd = :random.uniform(99_999_999_999)
+    server_rnd = :rand.uniform(99_999_999_999)
     salt = string_of_length(40)
     msg = %{type: "SMSG_AUTHENTICATE_CHALLENGE", server_rnd: server_rnd, salt: salt}
     Logger.info(fn -> "Create Response: SMSG_AUTHENTICATE_CHALLENGE" end, message: msg)
