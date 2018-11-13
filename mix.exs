@@ -17,7 +17,7 @@ defmodule GameServices.Umbrella.MixProject do
       source_url: "https://github.com/Alezrik/game_services_umbrella",
       docs: [
         main: "readme",
-        extras: ["README.md"]
+        extras: ["README.md", "TCP_PACKET.md"]
       ],
       test_coverage: [tool: ExCoveralls]
     ]

@@ -32,7 +32,8 @@ defmodule UserManager.MixProject do
       {:game_services, in_umbrella: true},
       {:libcluster, "~> 3.0"},
       {:swarm, "~> 3.0"},
-      {:stream_data, "~> 0.1", only: :test}
+      {:stream_data, "~> 0.1", only: :test},
+      {:logger_backend, in_umbrella: true}
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"},
       # {:sibling_app_in_umbrella, in_umbrella: true},

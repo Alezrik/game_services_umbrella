@@ -11,6 +11,11 @@ defmodule Authentication do
   @spec get_user_by_credential(String.t(), String.t()) ::
           {:ok, %GameServices.Account.User{}} | {:error, any()}
   def get_user_by_credential(username, password) do
+    Logger.info(fn -> "Authenticate By Credential Request" end,
+      username: username,
+      password: password
+    )
+
     GenServer.call(
       ClusterManager.get_authentication_worker(),
       {:authenticate, username, password}

@@ -53,7 +53,8 @@ defmodule GameServicesWeb.MixProject do
       {:swarm, "~> 3.0"},
       {:junit_formatter, ">= 0.0.0", only: :test},
       {:authentication, in_umbrella: true},
-      {:user_manager, in_umbrella: true}
+      {:user_manager, in_umbrella: true},
+      {:logger_backend, in_umbrella: true}
     ]
   end
 

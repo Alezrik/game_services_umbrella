@@ -7,6 +7,8 @@ defmodule TcpServer do
     import Supervisor.Spec, warn: false
 
     children = [
+      {Task.Supervisor, name: TcpServer.TaskSupervisor},
+      {TcpServer.TcpCommandProcessor, []},
       {TcpServer.SocketListener, []}
     ]
 

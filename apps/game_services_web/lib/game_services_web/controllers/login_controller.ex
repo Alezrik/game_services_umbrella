@@ -10,22 +10,26 @@ defmodule GameServicesWeb.LoginController do
 
   @spec login(Plug.Conn.t(), any()) :: Plug.Conn.t()
   def login(conn, %{"login" => login}) do
-    Logger.info(fn -> "process login request: #{inspect(login)}" end)
+    username = Map.get(login, "username")
+    password = Map.get(login, "password")
+    Logger.metadata(username: username)
+    Logger.metadata(password: password)
 
     case Authentication.get_user_by_credential(
-           Map.get(login, "username"),
-           Map.get(login, "password")
+           username,
+           password
          ) do
       {:ok, user} ->
-        Logger.info(fn -> "login success: #{inspect(user)}" end)
+        Logger.info(fn -> "login success" end, user_id: user.id)
 
         conn
         |> Authentication.login_connection(user)
         |> redirect(to: Routes.page_path(conn, :index))
 
       {_error, reason} ->
-        Logger.info(fn -> "login fail: #{inspect(reason)}" end)
-        Logger.debug(fn -> inspect(GameServices.Identity.list_credentials()) end)
+        Logger.warn(fn -> "login fail: #{inspect(reason)}" end,
+          username: Map.get(login, "username", "")
+        )
 
         conn
         |> put_flash(:login_err, "Invalid Login Credentials")

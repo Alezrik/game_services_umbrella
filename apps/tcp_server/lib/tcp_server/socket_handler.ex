@@ -31,17 +31,20 @@ defmodule TcpServer.SocketHandler do
   def flush(_, _, []) do
   end
 
-  def flush(socket, transport, ack_list) do
-    [{id, _} | _] = ack_list
-    skipped = calc_skipped(ack_list)
-    packet = <<id::binary-size(8), skipped::little-size(32)>>
-    transport.send(socket, packet)
+  def flush(_socket, _transport, _ack_list) do
+    #    Logger.warn "ack_list: #{inspect ack_list}"
+    #    [{id, _} | _] = ack_list
+    #    skipped = calc_skipped(ack_list)
+    #    GenServer.cast(ClusterManager.get_tcp_command_processor(), {:process, id, ack_list, socket, transport})
   end
 
   def responder(socket, transport, yet_to_parse, ack_list, packet_count) do
+    #    Logger.warn "top yet_to_parse: #{inspect yet_to_parse}"
+    ##    Logger.warn "top ack_list: #{inspect ack_list}"
+    ##    Logger.warn "packet_count: #{inspect packet_count}"
     receive do
       {:message, packet} ->
-        case parse(yet_to_parse <> packet, <<>>, 0) do
+        case parse(yet_to_parse <> packet, <<>>, 0, transport, socket) do
           {not_yet_parsed, {id, skipped}} ->
             new_ack_list = [{id, skipped} | ack_list]
 
@@ -95,36 +98,46 @@ defmodule TcpServer.SocketHandler do
     :ok = transport.close(socket)
   end
 
-  defp parse(<<>>, <<>>, _skipped) do
+  defp parse(<<>>, <<>>, _skipped, _transport, _socket) do
     {<<>>, {}}
   end
 
-  defp parse(<<>>, last_id, skipped) do
+  defp parse(<<>>, last_id, skipped, _transport, _socket) do
     {<<>>, {last_id, skipped}}
   end
 
-  defp parse(packet, <<>>, 0) do
+  defp parse(packet, <<>>, 0, transport, socket) do
     case packet do
-      <<id::binary-size(8), sz::little-size(32), _data::binary-size(sz)>> when sz < 1_000_000 ->
+      <<id::binary-size(8), sz::little-size(32), data::binary-size(sz)>> when sz < 1_000_000 ->
+        GenServer.cast(
+          ClusterManager.get_tcp_command_processor(),
+          {:process, id, data <> <<0>>, socket, transport}
+        )
+
         {<<>>, {id, 0}}
 
-      <<id::binary-size(8), sz::little-size(32), _data::binary-size(sz), rest::binary>>
+      <<id::binary-size(8), sz::little-size(32), data::binary-size(sz), rest::binary>>
       when sz < 100 ->
-        parse(rest, id, 0)
+        GenServer.cast(
+          ClusterManager.get_tcp_command_processor(),
+          {:process, id, data <> <<0>>, socket, transport}
+        )
+
+        parse(rest, id, 0, transport, socket)
 
       unparsed ->
         {unparsed, {}}
     end
   end
 
-  defp parse(packet, last_id, skipped) do
+  defp parse(packet, last_id, skipped, transport, socket) do
     case packet do
       <<id::binary-size(8), sz::little-size(32), _data::binary-size(sz)>> when sz < 1_000_000 ->
         {<<>>, {id, skipped + 1}}
 
       <<id::binary-size(8), sz::little-size(32), _data::binary-size(sz), rest::binary>>
       when sz < 100 ->
-        parse(rest, id, skipped + 1)
+        parse(rest, id, skipped + 1, transport, socket)
 
       unparsed ->
         {unparsed, {last_id, skipped}}

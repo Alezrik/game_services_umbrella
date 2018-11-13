@@ -2,7 +2,13 @@
 
 ## 0.2.0
 * Implement TCP Server
-# re-enable dialyzer
+* re-enable dialyzer
+* bump phoenix to 1.4
+* introduce a tcp command processor
+* fix up logging in all apps
+* introduce tcp serialize and deserializer
+* introduce workflow for CMSG_AUTHENTICATE_CHALLENGE
+* change :random to :rand
 
 
 ## 0.1.0
