@@ -20,12 +20,26 @@ defmodule TcpServer.TcpCommandProcessor do
 
     with {:ok, resp} <-
            TcpServer.CommandDeserializer.deserialize(:binary.decode_unsigned(id), params) do
-      Logger.error(fn -> "Deserializer: #{inspect resp}" end)
+      process_msg(resp, socket, transport)
     else
       {:error, reason} -> Logger.error(fn -> "Deserialize Error: #{inspect(reason)}" end)
       err -> Logger.error(fn -> "Deserialize Error: #{inspect(err)}" end)
     end
 
     {:noreply, state}
+  end
+
+  def process_msg(msg, socket, transport) when is_map(msg) do
+    t = Map.get(msg, :type, "INVALID")
+
+    case t do
+      "CMSG_AUTHENTICATE_CHALLENGE" ->
+        Logger.info(fn -> "Process Client Msg: CMSG_AUTHENTICATE_CHALLENGE" end, message: msg)
+
+        TcpServer.Workflows.CmsgAuthenticateChallenge.process_msg(msg,
+          response_pid: transport,
+          response_socket: socket
+        )
+    end
   end
 end

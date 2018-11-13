@@ -21,9 +21,20 @@ Beginning of Authentication Routine - client sends a request for a server secret
 * destination: tcp server
 
 #### Message Params
+
+### SMSG_AUTHENTICATE_CHALLENGE
+
+Server response to client challenge
+
+* ID: 2
+* source: tcp_server
+* destination: game client
+
+#### Message Params
+
 ```
-1byte: username len
-Xbyte: username
-4byte: random 32bit integer client authentication id
+4byte: random 32bit integer server authentication id
+1byte: salt len
+Xbyte: salt
 ```
 

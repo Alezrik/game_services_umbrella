@@ -7,10 +7,6 @@ use Mix.Config
 # file won't be loaded nor affect the parent project. For this reason,
 # if you want to provide default values for your application for
 # 3rd-party users, it should be done in your "mix.exs" file.
-config :logger,
-  level: :error,
-  format: {LogFormatter, :format},
-  metadata: :all
 
 # You can configure your application as:
 #

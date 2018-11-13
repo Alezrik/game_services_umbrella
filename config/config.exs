@@ -14,9 +14,9 @@ import_config "../apps/*/config/config.exs"
 
 # Configures Elixir's Logger
 config :logger,
-       level: :error,
-       format: {LogFormatter, :format},
-       metadata: :all
+  level: :error,
+  format: {LogFormatter, :format},
+  metadata: :all
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
