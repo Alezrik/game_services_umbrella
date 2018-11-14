@@ -13,8 +13,8 @@ use Mix.Config
 import_config "../apps/*/config/config.exs"
 
 # Configures Elixir's Logger
-config :logger,
-  level: :error,
+config :logger, :console,
+  level: :info,
   format: {LogFormatter, :format},
   metadata: :all
 

@@ -3,7 +3,7 @@ use Mix.Config
 # Do not include metadata nor timestamps in development logs
 config :logger, :console,
   format: {LogFormatter, :format},
-  level: :info,
+  level: :debug,
   metadata: :all
 
 # Initialize plugs at runtime for faster development compilation

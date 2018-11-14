@@ -15,7 +15,7 @@ defmodule TcpServer.TcpCommandProcessor do
 
   @impl true
   def handle_cast({:process, id, params, socket, transport}, state) when is_binary(id) do
-    Logger.error(fn -> "process: #{inspect(id)}" end)
+    Logger.debug(fn -> "processing message" end, message_id: id)
 
     Task.Supervisor.async_nolink(TcpServer.TaskSupervisor, fn ->
       bitsize = bit_size(params)
@@ -46,7 +46,7 @@ defmodule TcpServer.TcpCommandProcessor do
         )
 
       "CMSG_AUTHENTICATE" ->
-        Logger.info(fn -> "Process Client Msg: CMSG_AUTHENTICATE_CHALLENGE" end, message: msg)
+        Logger.info(fn -> "Process Client Msg: CMSG_AUTHENTICATE" end, message: msg)
 
         TcpServer.Workflows.CmsgAuthenticate.process_msg(msg,
           response_pid: transport,

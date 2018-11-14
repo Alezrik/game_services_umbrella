@@ -16,8 +16,9 @@ defmodule TcpServer.Workflows.CmsgAuthenticateChallenge do
     salt = string_of_length(40)
     msg = %{type: "SMSG_AUTHENTICATE_CHALLENGE", server_rnd: server_rnd, salt: salt}
 
-    Logger.error(fn -> "Create Response: SMSG_AUTHENTICATE_CHALLENGE #{inspect(msg)}" end,
-      message: msg
+    Logger.info(fn -> "Create Response: SMSG_AUTHENTICATE_CHALLENGE" end,
+      server_rnd: server_rnd,
+      salt: salt
     )
 
     with {:ok, message_len, message} <- TcpServer.CommandSerializer.serialize(msg),

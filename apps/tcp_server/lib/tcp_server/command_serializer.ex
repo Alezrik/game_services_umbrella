@@ -16,12 +16,16 @@ defmodule TcpServer.CommandSerializer do
         {:error, "invalid server random"}
 
       false ->
-        Logger.error(fn -> "pw_salt: #{pw_salt}" end)
-        Logger.error(fn -> "server rnd: #{server_rnd}" end)
+        #        Logger.error(fn -> "pw_salt: #{pw_salt}" end)
+        #        Logger.error(fn -> "server rnd: #{server_rnd}" end)
         pw_salt_len = byte_size(pw_salt)
         message = <<server_rnd::size(32), pw_salt_len::size(8)>> <> pw_salt
         message_len = byte_size(message)
-        Logger.error(fn -> "message_len: #{message_len}" end)
+
+        Logger.info(fn -> "Serialize SMSG_AUTHENTICATE_CHALLENGE to binary" end,
+          message_len: message_len
+        )
+
         {:ok, message_len, message}
     end
   end
