@@ -1,5 +1,11 @@
 # Tcp Message Packet Definitions
 
+## Naming Convntion Header
+
+* CMSG -> A message originating from game client
+* SMSG -> A message originating from game server
+* GMSG -> A message originating from game server
+
 ## Basic Structure
 
 ### Very Under Construction 0.2.0
@@ -28,7 +34,7 @@ Server response to client challenge
 
 * ID: 2
 * source: tcp_server
-* destination: game client
+* destination: game client or game server
 
 #### Message Params
 
@@ -37,4 +43,33 @@ Server response to client challenge
 1byte: salt len
 Xbyte: salt
 ```
+
+### GMSG_AUTHENTICATE_CHALLENGE
+
+Game Server Authenticate Challenge
+
+* ID: 3
+* source: game server
+* destination: tcp server
+
+### Message Params
+
+* TBD
+
+### CMSG_AUTHENTICATE
+
+Client requests to authenticate
+
+* ID: 4
+* source: game client
+* destination: tcp server
+
+### Message Params
+
+---
+hash result |> Base64.encode()
+---
+
+#### Hash Creation
+"client_rand+server_rand+password+salt" as a string
 

@@ -3,8 +3,6 @@ defmodule TcpServer.CommandSerializer do
   require Logger
 
   def serialize(%{type: "SMSG_AUTHENTICATE_CHALLENGE"} = params) do
-    id_sz = 8 * 8
-    sz_sz = 32
     server_rnd = Map.get(params, :server_rnd, -1)
     pw_salt = Map.get(params, :salt, "")
 
@@ -18,9 +16,12 @@ defmodule TcpServer.CommandSerializer do
         {:error, "invalid server random"}
 
       false ->
+        Logger.error(fn -> "pw_salt: #{pw_salt}" end)
+        Logger.error(fn -> "server rnd: #{server_rnd}" end)
         pw_salt_len = byte_size(pw_salt)
         message = <<server_rnd::size(32), pw_salt_len::size(8)>> <> pw_salt
         message_len = byte_size(message)
+        Logger.error(fn -> "message_len: #{message_len}" end)
         {:ok, message_len, message}
     end
   end
