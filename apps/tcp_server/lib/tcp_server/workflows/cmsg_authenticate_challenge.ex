@@ -21,14 +21,25 @@ defmodule TcpServer.Workflows.CmsgAuthenticateChallenge do
       salt: salt
     )
 
-    with {:ok, message_len, message} <- TcpServer.CommandSerializer.serialize(msg),
+    with {:ok, ticket} <-
+           GameServices.Authentication.create_ticket(%{
+             client_token: "#{Map.get(params, :client_rnd)}",
+             server_token: "#{server_rnd}",
+             username: Map.get(params, :name),
+             salt: salt
+           }),
+          {:ok, message_len, message} <- TcpServer.CommandSerializer.serialize(msg),
          transport <- Keyword.get(opts, :response_pid, nil),
          socket <- Keyword.get(opts, :response_socket, nil) do
       id = 2
       id_sz = 8 * 8
       sz_sz = 32
       message_bytes = <<id::size(id_sz), message_len::little-size(sz_sz)>> <> message
+      Logger.error(fn -> "sending tcp reply" end)
+
       transport.send(socket, message_bytes)
+      else
+      err -> Logger.error "Got error: #{inspect err}"
     end
   end
 

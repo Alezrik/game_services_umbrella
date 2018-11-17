@@ -27,6 +27,7 @@ defmodule TcpServer.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:game_services, in_umbrella: true},
       {:logger_backend, in_umbrella: true},
       {:cowboy, "~> 2.5.0"},
       {:cluster_manager, in_umbrella: true}

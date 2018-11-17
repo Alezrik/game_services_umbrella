@@ -6,5 +6,6 @@ defmodule TcpServer.Workflows.CmsgAuthenticate do
   end
 
   defp execute(params, opts) do
+ #x`   with {:ok, ticket} <- GameServices.Authentication.create_ticket()
   end
 end

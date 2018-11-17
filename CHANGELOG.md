@@ -10,6 +10,7 @@
 * introduce workflow for CMSG_AUTHENTICATE_CHALLENGE
 * change :random to :rand
 * introduce workflow for CMSG_AUTHENTICATE
+* fix logger conf
 
 ## 0.1.0
 * integrate libcluster

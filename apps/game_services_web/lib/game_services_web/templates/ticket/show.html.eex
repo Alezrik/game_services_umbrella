@@ -1,0 +1,28 @@
+<h1>Show Ticket</h1>
+
+<ul>
+
+  <li>
+    <strong>Client token:</strong>
+    <%= @ticket.client_token %>
+  </li>
+
+  <li>
+    <strong>Server token:</strong>
+    <%= @ticket.server_token %>
+  </li>
+
+  <li>
+    <strong>Username:</strong>
+    <%= @ticket.username %>
+  </li>
+
+  <li>
+    <strong>Salt:</strong>
+    <%= @ticket.salt %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.ticket_path(@conn, :edit, @ticket) %></span>
+<span><%= link "Back", to: Routes.ticket_path(@conn, :index) %></span>
