@@ -27,6 +27,11 @@ Beginning of Authentication Routine - client sends a request for a server secret
 * destination: tcp server
 
 #### Message Params
+```
+8byte: name length
+Xbytes: name
+32byte: client challenge key
+```
 
 ### SMSG_AUTHENTICATE_CHALLENGE
 
@@ -39,8 +44,8 @@ Server response to client challenge
 #### Message Params
 
 ```
-4byte: random 32bit integer server authentication id
-1byte: salt len
+32byte: random 32bit integer server authentication id
+8byte: salt len
 Xbyte: salt
 ```
 
@@ -66,9 +71,9 @@ Client requests to authenticate
 
 ### Message Params
 
----
-hash result |> Base64.encode()
----
+```
+Xbytes: hash result |> Base64.encode()
+```
 
 #### Hash Creation
 "client_rand+server_rand+password+salt" as a string
