@@ -1,0 +1,32 @@
+<h1>Listing Tickets</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Client token</th>
+      <th>Server token</th>
+      <th>Username</th>
+      <th>Salt</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for ticket <- @tickets do %>
+    <tr>
+      <td><%= ticket.client_token %></td>
+      <td><%= ticket.server_token %></td>
+      <td><%= ticket.username %></td>
+      <td><%= ticket.salt %></td>
+
+      <td>
+        <%= link "Show", to: Routes.ticket_path(@conn, :show, ticket) %>
+        <%= link "Edit", to: Routes.ticket_path(@conn, :edit, ticket) %>
+        <%= link "Delete", to: Routes.ticket_path(@conn, :delete, ticket), method: :delete, data: [confirm: "Are you sure?"] %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Ticket", to: Routes.ticket_path(@conn, :new) %></span>

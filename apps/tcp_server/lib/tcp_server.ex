@@ -8,6 +8,7 @@ defmodule TcpServer do
 
     children = [
       {Task.Supervisor, name: TcpServer.TaskSupervisor},
+      {TcpServer.TcpClient, []},
       {TcpServer.TcpCommandProcessor, []},
       {TcpServer.SocketListener, []}
     ]

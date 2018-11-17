@@ -107,6 +107,8 @@ defmodule TcpServer.SocketHandler do
   end
 
   defp parse(packet, <<>>, 0, transport, socket) do
+    Logger.debug(fn -> "parse packet #{inspect(packet)}" end)
+
     case packet do
       <<id::binary-size(8), sz::little-size(32), data::binary-size(sz)>> when sz < 1_000_000 ->
         GenServer.cast(
@@ -126,6 +128,7 @@ defmodule TcpServer.SocketHandler do
         parse(rest, id, 0, transport, socket)
 
       unparsed ->
+        Logger.error(fn -> "no parser match: #{inspect(unparsed)}" end)
         {unparsed, {}}
     end
   end

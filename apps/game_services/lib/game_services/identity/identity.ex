@@ -57,7 +57,6 @@ defmodule GameServices.Identity do
 
       [resp] ->
         credential = resp |> Repo.preload(:user)
-        Logger.debug(fn -> "credential is #{inspect(credential)}" end)
         {:ok, credential.user}
     end
   end

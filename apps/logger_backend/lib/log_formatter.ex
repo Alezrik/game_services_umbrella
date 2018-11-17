@@ -34,6 +34,23 @@ defmodule LogFormatter do
   end
 
   def output_metadata(metadata, key) do
+    #    m = Keyword.get(metadata, key)
+    if is_map(Keyword.get(metadata, key)) do
+      process_map(Keyword.get(metadata, key), key)
+    else
+      process_value(metadata, key)
+    end
+  end
+
+  def process_map(map, key) do
+    if Map.has_key?(map, "password") or Map.has_key?(map, :password) do
+      "#{key}:(LOG REDACTED MAP)"
+    else
+      "#{key}:#{inspect(map)}"
+    end
+  end
+
+  def process_value(metadata, key) do
     if Enum.member?(@protected, key) do
       "#{key}=(REDACTED)"
     else
