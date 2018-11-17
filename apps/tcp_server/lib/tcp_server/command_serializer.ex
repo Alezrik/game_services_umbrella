@@ -29,4 +29,24 @@ defmodule TcpServer.CommandSerializer do
         {:ok, message_len, message}
     end
   end
+
+  def serialize(%{type: "SMSG_AUTHENTICATE"} = params) do
+    case Map.get(params, :success, false) do
+      true ->
+        token = Map.get(params, :token)
+        Logger.debug(fn -> "token" end, token: token)
+        token_len = byte_size(token)
+        success = 1
+        message = <<1::size(8), token_len::size(32)>> <> token
+        message_len = byte_size(message)
+        Logger.info(fn -> "Serialize SMSG_AUTHENTICATE to binary" end, message_len: message_len)
+        {:ok, message_len, message}
+
+      false ->
+        message = <<0::size(8), 0::size(8)>>
+        message_len = byte_size(message)
+        Logger.info(fn -> "Serialize SMSG_AUTHENTICATE to binary" end, message_len: message_len)
+        {:ok, message_len, message}
+    end
+  end
 end

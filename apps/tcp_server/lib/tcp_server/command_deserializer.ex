@@ -6,8 +6,8 @@ defmodule TcpServer.CommandDeserializer do
   def deserialize(1, params) do
     sz = byte_size(params) - 1
     <<name_len::size(8), remain::binary>> = params
-    <<name::binary-size(name_len), left::binary>> = remain
-    client_rnd = :binary.decode_unsigned(left)
+    <<name::binary-size(name_len), client_rnd::size(32), remain::binary>> = remain
+    #    client_rnd = :binary.decode_unsigned(left)
 
     Logger.info(fn -> "CMSG_AUTHENTICATE_CHALLENGE received" end,
       name: name,

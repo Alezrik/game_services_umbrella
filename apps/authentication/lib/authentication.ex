@@ -48,4 +48,12 @@ defmodule Authentication do
       _token -> :authenticated
     end
   end
+
+  @doc """
+  generate user token
+"""
+  def get_user_token(user) do
+    {:ok, token, _claims} = Authentication.Guardian.encode_and_sign(user)
+    {:ok, token}
+  end
 end

@@ -73,3 +73,16 @@ hash result |> Base64.encode()
 #### Hash Creation
 "client_rand+server_rand+password+salt" as a string
 
+### SMSG_AUTHENTICATE
+
+Server responds to client authenticate
+
+* ID: 5
+* source: tcp server
+* destination: game server or client
+
+```
+8byte: success(1 = true, 0 = false)
+32byte: token length
+Xbytes: token
+```

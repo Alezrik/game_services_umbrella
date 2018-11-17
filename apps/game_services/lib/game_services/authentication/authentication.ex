@@ -22,6 +22,23 @@ defmodule GameServices.Authentication do
   end
 
   @doc """
+    Gets a ticket that matches a client token and server token and salt
+  """
+  require Logger
+  def get_ticket(client_token, server_token, salt) do
+    query = Ticket
+    |> where(client_token: ^"#{client_token}")
+    |> where(server_token: ^"#{server_token}")
+    |> where(salt: ^"#{salt}")
+
+    case Repo.all(query) do
+      [] -> {:error, "No Ticket Found"}
+      item -> {:ok, List.first(item)}
+
+    end
+  end
+
+  @doc """
   Gets a single ticket.
 
   Raises `Ecto.NoResultsError` if the Ticket does not exist.
