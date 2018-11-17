@@ -1,4 +1,5 @@
 defmodule TcpServer.Workflows.CmsgAuthenticate do
+  @moduledoc false
   require Logger
 
   def process_msg(%{type: "CMSG_AUTHENTICATE"} = params, opts \\ []) do
