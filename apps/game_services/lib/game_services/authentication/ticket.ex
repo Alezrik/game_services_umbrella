@@ -1,7 +1,7 @@
 defmodule GameServices.Authentication.Ticket do
   @moduledoc """
-  Authentication Challenge Tickets
-"""
+    Authentication Challenge Tickets
+  """
   use Ecto.Schema
   import Ecto.Changeset
 

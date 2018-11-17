@@ -9,12 +9,11 @@ defmodule TcpServerTest do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(GameServices.Repo)
     Ecto.Adapters.SQL.Sandbox.mode(GameServices.Repo, {:shared, self()})
   end
+
   property "sometthing" do
     check all name <- string(:alphanumeric, min_length: 5, max_length: 20),
               email <- string(:alphanumeric, min_length: 5, max_length: 20),
               password <- string(:alphanumeric, min_length: 5, max_length: 20) do
-
-
       UserManager.register_new_user(name, email, password)
       {:ok, conn} = :gen_tcp.connect('localhost', 8005, [:binary, active: false])
       id = 1

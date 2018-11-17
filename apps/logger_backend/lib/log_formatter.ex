@@ -46,9 +46,8 @@ defmodule LogFormatter do
     if Map.has_key?(map, "password") or Map.has_key?(map, :password) do
       "#{key}:(LOG REDACTED MAP)"
     else
-      "#{key}:#{inspect map}"
+      "#{key}:#{inspect(map)}"
     end
-
   end
 
   def process_value(metadata, key) do

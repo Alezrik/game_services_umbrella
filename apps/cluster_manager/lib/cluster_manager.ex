@@ -32,8 +32,8 @@ defmodule ClusterManager do
   end
 
   @doc """
-  gets the tag to call the TcpClient's GenServer
-"""
+    gets the tag to call the TcpClient's GenServer
+  """
   @spec get_tcp_client(boolean()) :: {atom(), atom(), module()} | module()
   def get_tcp_client(get_swarm \\ @cluster_active) do
     get_gensever_name(TcpServer.TcpClient, get_swarm)
