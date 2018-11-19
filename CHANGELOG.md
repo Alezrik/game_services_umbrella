@@ -1,5 +1,7 @@
 # Game Services Umbrella Change Log
 
+## 0.3.0
+* Started work on UE4 Client - https://github.com/Alezrik/game_services_client-UE4
 ## 0.2.0
 * Implement TCP Server
 * re-enable dialyzer

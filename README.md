@@ -18,6 +18,9 @@ Generate Documentation
 mix doc && open doc/index.html
 ```
 
+### Game Clients
+* Unreal Engine 4 - https://github.com/Alezrik/game_services_client-UE4
+
 ### Installing / Local Deployment Game Services
 
 Install [Docker](http://www.docker.io/) - Docker containers for local deployment build/release

@@ -9,11 +9,13 @@ defmodule TcpServer.SocketHandler do
   end
 
   def init(ref, socket, transport, _opts \\ []) do
+    Logger.debug(fn -> "New Socket Connection" end, transport: transport)
     :ok = :ranch.accept_ack(ref)
     transport.setopts(socket, nodelay: true)
     responder_pid = spawn_link(__MODULE__, :responder, [socket, transport, <<>>, [], 0])
     Process.flag(:trap_exit, true)
     loop(socket, transport, responder_pid)
+    Logger.debug(fn -> "Socket Connection Closed" end, transport: transport)
   end
 
   def calc_skipped([]) do
