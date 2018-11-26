@@ -13,7 +13,8 @@ defmodule TcpServerTest do
   property "sometthing" do
     check all name <- string(:alphanumeric, min_length: 5, max_length: 20),
               email <- string(:alphanumeric, min_length: 5, max_length: 20),
-              password <- string(:alphanumeric, min_length: 5, max_length: 20) do
+              password <- string(:alphanumeric, min_length: 5, max_length: 20),
+              max_runs: 1 do
       UserManager.register_new_user(name, email, password)
       {:ok, conn} = :gen_tcp.connect('localhost', 8005, [:binary, active: false])
       id = 1
@@ -63,6 +64,21 @@ defmodule TcpServerTest do
           :gen_tcp.close(conn)
           assert(false, "Error on TCP Receive: #{inspect(reason)}")
       end
+    end
+  end
+
+  test "something else" do
+    id = 100
+    message_len = 1
+    message = 1
+    id_sz = 8 * 8
+    sz_sz = 32
+    packet = <<id::size(id_sz), message_len::little-size(sz_sz)>> <> <<1>>
+    {:ok, conn} = :gen_tcp.connect('localhost', 8005, [:binary, active: false])
+    :gen_tcp.send(conn, packet)
+
+    case :gen_tcp.recv(conn, 0, 5000) do
+      {:ok, data} -> IO.puts("got data")
     end
   end
 end

@@ -11,7 +11,7 @@
 ### Very Under Construction 0.2.0
 ```
 8byte:  command id
-32byte: message length
+4byte: message length
 Xbytes: message params
 ```
 
@@ -28,9 +28,9 @@ Beginning of Authentication Routine - client sends a request for a server secret
 
 #### Message Params
 ```
-8byte: name length
+1byte: name length
 Xbytes: name
-32byte: client challenge key
+4byte: client challenge key
 ```
 
 ### SMSG_AUTHENTICATE_CHALLENGE
@@ -44,8 +44,8 @@ Server response to client challenge
 #### Message Params
 
 ```
-32byte: random 32bit integer server authentication id
-8byte: salt len
+4byte: random 32bit integer server authentication id
+1byte: salt len
 Xbyte: salt
 ```
 
@@ -87,7 +87,7 @@ Server responds to client authenticate
 * destination: game server or client
 
 ```
-8byte: success(1 = true, 0 = false)
-32byte: token length
+1byte: success(1 = true, 0 = false)
+4byte: token length
 Xbytes: token
 ```
