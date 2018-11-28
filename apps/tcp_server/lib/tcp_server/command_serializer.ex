@@ -49,4 +49,11 @@ defmodule TcpServer.CommandSerializer do
         {:ok, message_len, message}
     end
   end
+
+  def serialize(%{type: "SMSG_HEARTBEAT"} = params) do
+    message = <<1>>
+    message_len = byte_size(message)
+    Logger.info(fn -> "Serialize SMSG_HEARTBEAT to binary" end, message_len: message_len)
+    {:ok, message_len, message}
+  end
 end

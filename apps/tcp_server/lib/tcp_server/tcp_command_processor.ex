@@ -52,6 +52,14 @@ defmodule TcpServer.TcpCommandProcessor do
           response_pid: transport,
           response_socket: socket
         )
+
+      "CMSG_HEARTBEAT" ->
+        Logger.info(fn -> "Process Client Msg: CMSG_HEARTBEAT" end, message: msg)
+
+        TcpServer.Workflows.CmsgHeartbeat.process_msg(msg,
+          response_pid: transport,
+          response_socket: socket
+        )
     end
   end
 end

@@ -43,6 +43,11 @@ defmodule TcpServer.CommandDeserializer do
      }}
   end
 
+  def deserialize(100, params) do
+    Logger.info(fn -> "CMSG_HEARTBEAT received" end)
+    {:ok, %{type: "CMSG_HEARTBEAT", type_id: 100}}
+  end
+
   def deserialize(id, params) do
     Logger.error("Invalid Deserialize id", message_id: id, parameters: params)
     {:error, "invalid_id: #{inspect(id)}"}
