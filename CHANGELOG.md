@@ -4,6 +4,7 @@
 * Started work on UE4 Client - https://github.com/Alezrik/game_services_client-UE4
 * introduce workflow for CMSG_HEARTBEAT
 * introduce workflow for GMSG_HEARTBEAT
+* Fix authentication error to send error response
 
 ## 0.2.0
 * Implement TCP Server
