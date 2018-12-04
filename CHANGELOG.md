@@ -5,6 +5,7 @@
 * introduce workflow for CMSG_HEARTBEAT
 * introduce workflow for GMSG_HEARTBEAT
 * Fix authentication error to send error response
+* Fix salt len
 
 ## 0.2.0
 * Implement TCP Server
