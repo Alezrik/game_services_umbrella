@@ -29,8 +29,23 @@ defmodule TcpServer.Workflows.CmsgAuthenticate do
         else
           other ->
             Logger.warn(fn -> "Error on Authentication" end, error: other)
-            other
+            message =  %{type: "SMSG_AUTHENTICATE", success: false}
+            {:ok, message_len, message} = TcpServer.CommandSerializer.serialize(message)
+            GenServer.cast(
+              ClusterManager.get_tcp_client(),
+              {:send_msg, 5, message_len, message, opts}
+            )
+
         end
+        other ->
+          Logger.debug(fn -> "Auth Error" end, error: other)
+          message =  %{type: "SMSG_AUTHENTICATE", success: false}
+          {:ok, message_len, message} = TcpServer.CommandSerializer.serialize(message)
+          GenServer.cast(
+            ClusterManager.get_tcp_client(),
+            {:send_msg, 5, message_len, message, opts}
+          )
+
     end
   end
 end
