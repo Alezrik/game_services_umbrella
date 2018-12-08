@@ -36,7 +36,7 @@ defmodule TcpServerTest do
       case :gen_tcp.recv(conn, 0, 5000) do
         {:ok, data} ->
           <<id::size(64), msg_size::little-size(32), remain::binary>> = data
-          <<server_rnd::size(32), pw_salt_len::size(8), salt::binary>> = remain
+          <<server_rnd::size(32), pw_salt_len::size(32), salt::binary>> = remain
           #        :gen_tcp.close(conn)
           id = 4
 

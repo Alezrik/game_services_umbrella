@@ -45,7 +45,7 @@ Server response to client challenge
 
 ```
 4byte: random 32bit integer server authentication id
-1byte: salt len
+4byte: salt len
 Xbyte: salt
 ```
 
