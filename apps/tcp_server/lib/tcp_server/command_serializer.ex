@@ -19,13 +19,15 @@ defmodule TcpServer.CommandSerializer do
         #        Logger.error(fn -> "pw_salt: #{pw_salt}" end)
         #        Logger.error(fn -> "server rnd: #{server_rnd}" end)
         bin_salt = <<pw_salt::binary>>
-        pw_salt_len =byte_size(bin_salt)
+        pw_salt_len = byte_size(bin_salt)
 
         message = <<server_rnd::size(32), pw_salt_len::size(32)>> <> bin_salt
         message_len = byte_size(message)
 
         Logger.error(fn -> "Serialize SMSG_AUTHENTICATE_CHALLENGE to binary" end,
-          message_len: message_len, salt: pw_salt, salt_len: pw_salt_len
+          message_len: message_len,
+          salt: pw_salt,
+          salt_len: pw_salt_len
         )
 
         {:ok, message_len, message}

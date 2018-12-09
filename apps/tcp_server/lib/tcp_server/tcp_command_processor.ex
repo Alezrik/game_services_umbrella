@@ -61,9 +61,13 @@ defmodule TcpServer.TcpCommandProcessor do
           response_socket: socket
         )
 
-    "GMSG_HEARTBEAT" ->
-      Logger.info(fn -> "Process Game Msg: GMSG_HEARTBEAT " end, message: msg)
-      TcpServer.Workflows.GmsgHeartbeat.process_msg(msg, response_pid: transport, response_socket: socket)
+      "GMSG_HEARTBEAT" ->
+        Logger.info(fn -> "Process Game Msg: GMSG_HEARTBEAT " end, message: msg)
+
+        TcpServer.Workflows.GmsgHeartbeat.process_msg(msg,
+          response_pid: transport,
+          response_socket: socket
+        )
     end
   end
 end
