@@ -71,7 +71,7 @@ defmodule TcpServer.SocketHandler do
   end
 
   def loop(socket, transport, responder_pid) do
-    case transport.recv(socket, 0, 5000) do
+    case transport.recv(socket, 0, 15000) do
       {:ok, packet} ->
         {:message_queue_len, length} = :erlang.process_info(responder_pid, :message_queue_len)
 
