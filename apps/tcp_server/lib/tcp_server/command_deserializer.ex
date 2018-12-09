@@ -47,6 +47,7 @@ defmodule TcpServer.CommandDeserializer do
     Logger.info(fn -> "CMSG_HEARTBEAT received" end)
     {:ok, %{type: "CMSG_HEARTBEAT", type_id: 100}}
   end
+
   def deserialize(102, params) do
     Logger.info(fn -> "GMSG_HEARTBEAT received" end)
     {:ok, %{type: "GMSG_HEARTBEAT", type_id: 102}}
