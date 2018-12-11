@@ -17,7 +17,7 @@ defmodule TcpServer.Workflows.CmsgAuthenticate do
 
         with password <- Map.get(params, :password),
              {:ok, user} <- Authentication.get_user_by_credential(ticket.username, password),
-             {:ok, token} <- Authentication.get_user_token(user),
+             {:ok, token} <- Authentication.get_refresh_user_token(user),
              message <- %{type: "SMSG_AUTHENTICATE", success: true, token: token},
              {:ok, message_len, message} <- TcpServer.CommandSerializer.serialize(message) do
           Logger.info("Authentication Success", user: user)

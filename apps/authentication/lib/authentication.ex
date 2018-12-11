@@ -56,4 +56,12 @@ defmodule Authentication do
     {:ok, token, _claims} = Authentication.Guardian.encode_and_sign(user)
     {:ok, token}
   end
+
+  @doc """
+  generate a refresh user token
+"""
+  def get_refresh_user_token(user) do
+    {:ok, token, _claims} = Authentication.Guardian.encode_and_sign(user, %{}, token_type: "refresh")
+    {:ok, token}
+  end
 end
